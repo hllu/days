@@ -1,0 +1,77 @@
+#+AUTHOR:      the author (default taken from user-full-name)
+#+TITLE:       ODL中RPC的实现
+
+* odl中增加一个rpc
+** 在yang文件中增加rpc定义
+#+BEGIN_SRC java
+module HNI {
+    yang-version 1;
+    namespace "urn:opendaylight:params:xml:ns:yang:HNI";
+    prefix "HNI";
+
+    revision "2015-01-05" {
+        description "Initial revision of HNI model";
+    }
+    rpc starthni {
+        input {
+            leaf name {
+                type string;
+            }
+        }
+        output {
+            leaf result {
+                type string;
+            }
+        }
+    }
+}
+
+#+END_SRC
+
+** 在blueprint.xml中增加对rpc注册的引用
+#+BEGIN_SRC xml
+<reference id="rpcRegistry"
+             interface="org.opendaylight.controller.sal.binding.api.RpcProviderRegistry"
+             odl:type="default" />
+
+  <bean id="provider"
+    class="org.opendaylight.HNI.api.HniApiProvider"
+    init-method="init" destroy-method="close">
+    <argument ref="rpcRegistry" />
+  </bean>
+#+END_SRC
+
+** 实现上述的HniApiProvider
+
+主要是在init方法中增加rpc注册
+#+BEGIN_SRC java
+ public void init() {
+        LOG.info("HNIProvider Session Initiated");
+        serviceRegistration = rpcProviderRegistry.addRpcImplementation(HniService.class,
+                new HniServiceImpl());
+    }
+#+END_SRC
+
+** 由yang文件生成一个HNIservice接口，写这个接口的实现类HniServiceImpl
+
+#+BEGIN_SRC java
+
+public class HniServiceImpl implements HNIService {
+    private static final Logger LOG = LoggerFactory.getLogger(HniServiceImpl.class);
+
+    public HniServiceImpl() {
+    }
+
+    @Override
+    public  Future<RpcResult<StarthniOutput>> starthni(StarthniInput input){
+        StarthniOutputBuilder outputBuilder = new StarthniOutputBuilder();
+        outputBuilder.setResult("Begin to start " + input.getName());
+
+
+        //do some thing
+
+        return RpcResultBuilder.success(outputBuilder.build()).buildFuture();
+    }
+
+}
+#+END_SRC
