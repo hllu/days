@@ -75,3 +75,11 @@ public class HniServiceImpl implements HNIService {
 
 }
 #+END_SRC
+
+** pom文件中要导入需要的模块
+#+BEGIN_SRC xml
+    <dependency>
+      <groupId>org.opendaylight.controller</groupId>
+      <artifactId>sal-binding-api</artifactId>
+    </dependency>
+#+END_SRC
