@@ -1,0 +1,111 @@
+#+AUTHOR:      the author (default taken from user-full-name)
+#+TITLE:       RPC调试过程中的异常
+#+EMAIL: luhailong@inspur.com
+#+KEYWORDS: odl, rpc
+#+OPTIONS: H:4 toc:t num:t
+
+* 问题
+在原有的模块上增加一个rpc接口，rpc不可用，出现以下错误
+#+BEGIN_CENTER
+No implementation of RPC AbsoluteSchemaPath{path=[(urn:opendaylight:params:xml:ns:yang:HNI?revision=2015-01-05)hnitest1]} available
+#+END_CENTER
+
+
+Log中，相关模块的错误
+#+BEGIN_SRC json
+2017-11-21 18:55:12,440 | INFO  | Event Dispatcher | BlueprintBundleTracker           | 194 - org.opendaylight.controller.blueprint - 0.6.0.Carbon | Creating blueprint container for bundle\
+     org.opendaylight.hni.impl_0.1.0.SNAPSHOT [343] with paths [bundleentry://343.fwk951880373/org/opendaylight/blueprint/impl-blueprint.xml]
+2017-11-21 18:55:12,445 | WARN  | Event Dispatcher | RpcServiceMetadata               | 194 - org.opendaylight.controller.blueprint - 0.6.0.Carbon | {}: interface {} has no accptable entri\
+es, assuming it is satisfied
+2017-11-21 18:55:12,465 | ERROR | Event Dispatcher | AbstractRecipe                   | 15 - org.apache.aries.blueprint.core - 1.6.1 | Unable to load class org.opendaylight.hni.impl.hniPro\
+vider from recipe BeanRecipe[name='provider']
+2017-11-21 18:55:12,465 | WARN  | Event Dispatcher | BeanRecipe                       | 15 - org.apache.aries.blueprint.core - 1.6.1 | Object to be destroyed is not an instance of Unwrappe\
+redBeanHolder, type: null
+2017-11-21 18:55:12,466 | ERROR | Event Dispatcher | BlueprintContainerImpl           | 15 - org.apache.aries.blueprint.core - 1.6.1 | Unable to start blueprint container for bundle org.op\
+endaylight.hni.impl/0.1.0.SNAPSHOT
+org.osgi.service.blueprint.container.ComponentDefinitionException: Unable to load class org.opendaylight.hni.impl.hniProvider from recipe BeanRecipe[name='provider']
+        at org.apache.aries.blueprint.di.AbstractRecipe.doLoadType(AbstractRecipe.java:195)[15:org.apache.aries.blueprint.core:1.6.1]
+        at org.apache.aries.blueprint.di.AbstractRecipe.loadType(AbstractRecipe.java:161)[15:org.apache.aries.blueprint.core:1.6.1]
+        at org.apache.aries.blueprint.container.BeanRecipe.loadClass(BeanRecipe.java:250)[15:org.apache.aries.blueprint.core:1.6.1]
+        at org.apache.aries.blueprint.container.BeanRecipe.getType(BeanRecipe.java:917)[15:org.apache.aries.blueprint.core:1.6.1]
+        at org.apache.aries.blueprint.container.BeanRecipe.getInstanceFromType(BeanRecipe.java:341)[15:org.apache.aries.blueprint.core:1.6.1]
+        at org.apache.aries.blueprint.container.BeanRecipe.getInstance(BeanRecipe.java:282)[15:org.apache.aries.blueprint.core:1.6.1]
+        at org.apache.aries.blueprint.container.BeanRecipe.internalCreate2(BeanRecipe.java:830)[15:org.apache.aries.blueprint.core:1.6.1]
+        at org.apache.aries.blueprint.container.BeanRecipe.internalCreate(BeanRecipe.java:811)[15:org.apache.aries.blueprint.core:1.6.1]
+        at org.apache.aries.blueprint.di.AbstractRecipe$1.call(AbstractRecipe.java:79)[15:org.apache.aries.blueprint.core:1.6.1]
+        at java.util.concurrent.FutureTask.run(FutureTask.java:266)[:1.8.0_131]
+
+#+END_SRC
+
+* 分析
+** 通过分析代码，发现加入一段代码后，就会出现rpc错误
+#+BEGIN_SRC java
+
+    public static Action popVlanAction() {
+        return new PopVlanActionCaseBuilder()
+                .setPopVlanAction(new PopVlanActionBuilder()
+                        .build())
+                .build();
+    }
+
+#+END_SRC
+log中的错误，也提示是在启动模块中的一个provider类时候，发现异常，启动失败。
+
+初步分析是代码版本配套有问题，但排查后发现，其他的模块，例如sfc等，用的同样版本，但rpc可用。
+
+** 通过以上vlan的代码，引入了几个jar包，排查这几个jar包的版本
+
+#+BEGIN_SRC java
+model-flow-base
+openflow-plugin-extention-nicira
+#+END_SRC
+
+发现版本也没有问题。
+
+
+** 查看模块对应的pom文件，发现引用openflow-plugin-extention-nicira包的时候，重复引用了两次
+调整pom文件，删除两个不用的，多余的引用
+#+BEGIN_SRC xml
+@@ -68,18 +73,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
+-    <dependency>
+-      <groupId>org.opendaylight.mdsal</groupId>
+-      <artifactId>mdsal-binding2-spec</artifactId>
+-      <version>0.10.1-Carbon</version>
+-    </dependency>
+-
+
+@@ -147,11 +141,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
+       <classifier>features</classifier>
+     </dependency>
+ 
+-    <dependency>
+-      <groupId>org.powermock</groupId>
+-      <artifactId>powermock-api-mockito</artifactId>
+-      <scope>test</scope>
+-    </dependency>
+
+@@ -160,18 +150,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
+       <version>0.4.1-Carbon</version>
+     </dependency>
+ 
+-    <dependency>
+-      <groupId>org.opendaylight.openflowplugin</groupId>
+-      <artifactId>openflowjava-extension-nicira</artifactId>
+-      <version>0.4.1-Carbon</version>
+-    </dependency>
+-
+-
+-    <dependency>
+-      <groupId>org.opendaylight.openflowplugin</groupId>
+-      <artifactId>openflowplugin-extension-api</artifactId>
+-      <version>0.4.1-Carbon</version>
+-    </dependency>
+
+
+#+END_SRC
+
+调整pom文件后，模块加入到发行版，rpc接口可用了，但是单独运行模块，rpc接口仍然不可用
+
+* 分析
+
+blueprint启动指定的provider类的时候，需要检查依赖模块，如果有不依赖的情况，启动失败，可能这是模块init失败的原因。
