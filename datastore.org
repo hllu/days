@@ -304,16 +304,1307 @@
   }
 }
 #+END_SRC
-** 示例
+** 示例2
 #+BEGIN_SRC json
-{"network-topology":{"topology":[{"topology-id":"ovsdb:1","node":[{"node-id":"ovsdb://uuid/afa52431-c6ef-45fb-a2ef-17e884773964/bridge/br-int","ovsdb:managed-by":"/network-topology:network-topology/network-topology:topology[network-topology:topology-id='ovsdb:1']/network-topology:node[network-topology:node-id='ovsdb://uuid/afa52431-c6ef-45fb-a2ef-17e884773964']","ovsdb:fail-mode":"ovsdb:ovsdb-fail-mode-secure","ovsdb:protocol-entry":[{"protocol":"ovsdb:ovsdb-bridge-protocol-openflow-13"}],"ovsdb:controller-entry":[{"target":"tcp:192.168.137.222:6653"},{"target":"tcp:192.168.137.202:6653"}],"ovsdb:bridge-name":"br-int","ovsdb:bridge-other-configs":[{"bridge-other-config-key":"disable-in-band","bridge-other-config-value":"true"},{"bridge-other-config-key":"hwaddr","bridge-other-config-value":"ac:b5:1f:ee:2f:6a"}]},{"node-id":"ovsdb://uuid/276d8d94-5c5d-4616-95a1-644448df1222/bridge/br-int","ovsdb:managed-by":"/network-topology:network-topology/network-topology:topology[network-topology:topology-id='ovsdb:1']/network-topology:node[network-topology:node-id='ovsdb://uuid/276d8d94-5c5d-4616-95a1-644448df1222']","ovsdb:fail-mode":"ovsdb:ovsdb-fail-mode-secure","ovsdb:protocol-entry":[{"protocol":"ovsdb:ovsdb-bridge-protocol-openflow-13"}],"ovsdb:controller-entry":[{"target":"tcp:192.168.137.202:6653"}],"ovsdb:bridge-name":"br-int","ovsdb:bridge-other-configs":[{"bridge-other-config-key":"disable-in-band","bridge-other-config-value":"true"},{"bridge-other-config-key":"hwaddr","bridge-other-config-value":"dc:16:ba:9f:43:92"}]}]},{"topology-id":"hwvtep:1"}]}}
-
+{
+  "network-topology": {
+    "topology": [
+      {
+        "topology-id": "ovsdb:1",
+        "node": [
+          {
+            "node-id": "ovsdb://uuid/afa52431-c6ef-45fb-a2ef-17e884773964/bridge/br-int",
+            "ovsdb:managed-by": "/network-topology:network-topology/network-topology:topology[network-topology:topology-id='ovsdb:1']/network-topology:node[network-topology:node-id='ovsdb://uuid/afa52431-c6ef-45fb-a2ef-17e884773964']",
+            "ovsdb:fail-mode": "ovsdb:ovsdb-fail-mode-secure",
+            "ovsdb:protocol-entry": [
+              {
+                "protocol": "ovsdb:ovsdb-bridge-protocol-openflow-13"
+              }
+            ],
+            "ovsdb:controller-entry": [
+              {
+                "target": "tcp:192.168.137.222:6653"
+              },
+              {
+                "target": "tcp:192.168.137.202:6653"
+              }
+            ],
+            "ovsdb:bridge-name": "br-int",
+            "ovsdb:bridge-other-configs": [
+              {
+                "bridge-other-config-key": "disable-in-band",
+                "bridge-other-config-value": "true"
+              },
+              {
+                "bridge-other-config-key": "hwaddr",
+                "bridge-other-config-value": "ac:b5:1f:ee:2f:6a"
+              }
+            ]
+          },
+          {
+            "node-id": "ovsdb://uuid/276d8d94-5c5d-4616-95a1-644448df1222/bridge/br-int",
+            "ovsdb:managed-by": "/network-topology:network-topology/network-topology:topology[network-topology:topology-id='ovsdb:1']/network-topology:node[network-topology:node-id='ovsdb://uuid/276d8d94-5c5d-4616-95a1-644448df1222']",
+            "ovsdb:fail-mode": "ovsdb:ovsdb-fail-mode-secure",
+            "ovsdb:protocol-entry": [
+              {
+                "protocol": "ovsdb:ovsdb-bridge-protocol-openflow-13"
+              }
+            ],
+            "ovsdb:controller-entry": [
+              {
+                "target": "tcp:192.168.137.202:6653"
+              }
+            ],
+            "ovsdb:bridge-name": "br-int",
+            "ovsdb:bridge-other-configs": [
+              {
+                "bridge-other-config-key": "disable-in-band",
+                "bridge-other-config-value": "true"
+              },
+              {
+                "bridge-other-config-key": "hwaddr",
+                "bridge-other-config-value": "dc:16:ba:9f:43:92"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "topology-id": "hwvtep:1"
+      }
+    ]
+  }
+}
 #+END_SRC
-
 
 * inventory表
 **  inventroy表数据
 #+BEGIN_SRC json
 {"nodes":{"node":[{"id":"openflow:241990178390930","flow-node-inventory:table":[{"id":60,"flow":[{"id":"DHCPTableMissFlow","flow-name":"DHCP Table Miss Flow","idle-timeout":0,"cookie":109051904,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":60,"match":{}}]},{"id":90,"flow":[{"id":"QoSTableMissFlow","flow-name":"QoS Table Miss Flow","idle-timeout":0,"cookie":67108865,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":90,"match":{}}]},{"id":23,"flow":[{"id":"L3.241990178390930.23.0L3.","flow-name":"VPN-VNI Demux Table Miss","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":23,"match":{}}]},{"id":22,"flow":[{"id":"L3.241990178390930.22.0L3.","flow-name":"Subnet Route Table Miss","idle-timeout":0,"cookie":134217732,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}]}}]},"installHw":true,"priority":0,"table_id":22,"match":{}}]},{"id":213,"flow":[{"id":"Fixed_Conntrk_Trk_241990178390930_Tracked_Established17","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":62020,"table_id":213,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":34}}}]}},{"id":"213","flow-name":"Ingress ACL Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":213,"match":{}},{"id":"Fixed_Conntrk_Trk_241990178390930_Tracked_Related17","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":62020,"table_id":213,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":36}}}]}}]},{"id":212,"flow":[{"id":"212","flow-name":"Ingress ACL Remote Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":213}}]},"installHw":true,"priority":0,"table_id":212,"match":{}}]},{"id":20,"flow":[{"id":"L3.241990178390930.20.0L3.","flow-name":"Table Miss","idle-timeout":0,"cookie":16973824,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":80}}]},"installHw":true,"priority":0,"table_id":20,"match":{}}]},{"id":211,"flow":[{"id":"211","flow-name":"Ingress ACL Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":211,"match":{}}]},{"id":243,"flow":[{"id":"Fixed_Conntrk_Trk_241990178390930_Tracked_Related220","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":62020,"table_id":243,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":36}}}]}},{"id":"243","flow-name":"Egress ACL Filter Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":243,"match":{}},{"id":"Fixed_Conntrk_Trk_241990178390930_Tracked_Established220","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":62020,"table_id":243,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":34}}}]}}]},{"id":19,"flow":[{"id":"L3.GW_MAC_TABLE.ARP.241990178390930.19.1L3.","flow-name":"L3GwMac Arp Rquest","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"group-action":{"group-id":5000}}]}}]},"installHw":true,"priority":100,"table_id":19,"match":{"arp-op":1,"ethernet-match":{"ethernet-type":{"type":2054}}}},{"id":"L3.GW_MAC_TABLE.ARP.241990178390930.19.2L3.","flow-name":"L3GwMac Arp Reply","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":1,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}},{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}]}}]},"installHw":true,"priority":100,"table_id":19,"match":{"arp-op":2,"ethernet-match":{"ethernet-type":{"type":2054}}}},{"id":"L3.241990178390930.19.0L3.","flow-name":"L3 Gw Mac Table Miss","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":19,"match":{}}]},{"id":51,"flow":[{"id":"24199017839093051l2control01:80:C2:00:00:00FF:FF:FF:FF:FF:F0","flow-name":"L2 control packets dMac Table Flow","idle-timeout":0,"cookie":134414336,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":15,"table_id":51,"match":{"ethernet-match":{"ethernet-destination":{"mask":"FF:FF:FF:FF:FF:F0","address":"01:80:C2:00:00:00"}}}},{"id":"51","flow-name":"ELAN dMac Table Miss Flow","idle-timeout":0,"cookie":134414336,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":52}}]},"installHw":true,"priority":0,"table_id":51,"match":{}}]},{"id":18,"flow":[{"id":"DHCPTableMissFlowForExternalTunnel","flow-name":"DHCP Table Miss Flow For External Tunnel","idle-timeout":0,"cookie":109051904,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":38}}]},"installHw":true,"priority":0,"table_id":18,"match":{}}]},{"id":242,"flow":[{"id":"242","flow-name":"Egress ACL Remote Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":243}}]},"installHw":true,"priority":0,"table_id":242,"match":{}}]},{"id":50,"flow":[{"id":"50","flow-name":"ELAN sMac Table Miss Flow","idle-timeout":0,"cookie":134545408,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":1,"go-to-table":{"table_id":51}},{"order":0,"apply-actions":{"action":[{"order":1,"openflowplugin-extension-nicira-action:nx-learn":{"cookie":140509184,"idle-timeout":0,"fin-idle-timeout":0,"priority":0,"table-id":49,"fin-hard-timeout":0,"hard-timeout":10,"flags":0,"flow-mods":[{"flow-mod-add-match-from-field":{"flow-mod-num-bits":48,"src-field":1030,"dst-field":1030,"src-ofs":0,"dst-ofs":0}},{"flow-mod-add-match-from-field":{"flow-mod-num-bits":20,"src-field":66052,"dst-field":66052,"src-ofs":0,"dst-ofs":0}},{"flow-mod-copy-value-into-field":{"flow-mod-num-bits":8,"dst-field":67588,"dst-ofs":0,"value":1}}]}},{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}]}}]},"installHw":true,"priority":0,"table_id":50,"match":{}},{"id":"50.1","flow-name":"ELAN sMac Table Reg4 Flow","idle-timeout":0,"cookie":134545409,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":51}}]},"installHw":true,"priority":10,"table_id":50,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-reg4-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-reg":{"reg":"nicira-match:nxm-nx-reg4","value":1}}}]}}]},{"id":241,"flow":[{"id":"241","flow-name":"Egress ACL Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":241,"match":{}}]},{"id":17,"flow":[{"id":"L3VPN_to_Elan_Fallback_Default_Rule","flow-name":"L3VPN_to_Elan_Fallback_Default_Rule","idle-timeout":0,"cookie":134217728,"strict":true,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":1,"write-metadata":{"metadata":10376293541461622784,"metadata-mask":17293822569102704640}},{"order":2,"go-to-table":{"table_id":80}}]},"installHw":true,"priority":0,"table_id":17,"match":{"metadata":{"metadata":9223372036854775808,"metadata-mask":17293822569102704640}}}]},{"id":81,"flow":[{"id":"81","flow-name":"Arp_Responder_Drop_Flow","idle-timeout":0,"cookie":136445952,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":81,"match":{}}]},{"id":48,"flow":[{"id":"48","flow-name":"Elan sMac resubmit table","idle-timeout":0,"cookie":139460608,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":1,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":50}},{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":49}}]}}]},"installHw":true,"priority":0,"table_id":48,"match":{}}]},{"id":80,"flow":[{"id":"L3.241990178390930.80.0L3.","flow-name":"L3 Interface Table Miss","idle-timeout":0,"cookie":16973824,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":80,"match":{}}]},{"id":45,"flow":[{"id":"IPv6TableMissFlow","flow-name":"IPv6 Table Miss Flow","idle-timeout":0,"cookie":67108864,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":45,"match":{}}]},{"id":231,"flow":[{"id":"231_Miss","flow-name":"231_Miss","idle-timeout":0,"cookie":134218289,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":0,"table_id":231,"match":{}}]},{"id":230,"flow":[{"id":"230_Miss","flow-name":"230_Miss","idle-timeout":0,"cookie":134218288,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":0,"table_id":230,"match":{}}]}],"flow-node-inventory:group":[{"group-id":5000,"group-name":"Arp_Responder_Group_Flow","buckets":{"bucket":[{"bucket-id":2,"watch_group":4294967295,"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":81}}],"watch_port":4294967295,"weight":0},{"bucket-id":1,"watch_group":4294967295,"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}],"watch_port":4294967295,"weight":0},{"bucket-id":0,"watch_group":4294967295,"action":[{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}],"watch_port":4294967295,"weight":0}]},"group-type":"group-all"}]},{"id":"openflow:209745082223692","flow-node-inventory:table":[{"id":60,"flow":[{"id":"DHCPTableMissFlow","flow-name":"DHCP Table Miss Flow","idle-timeout":0,"cookie":109051904,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":60,"match":{}}]},{"id":90,"flow":[{"id":"QoSTableMissFlow","flow-name":"QoS Table Miss Flow","idle-timeout":0,"cookie":67108865,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":90,"match":{}}]},{"id":23,"flow":[{"id":"L3.209745082223692.23.0L3.","flow-name":"VPN-VNI Demux Table Miss","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":23,"match":{}}]},{"id":22,"flow":[{"id":"L3.209745082223692.22.0L3.","flow-name":"Subnet Route Table Miss","idle-timeout":0,"cookie":134217732,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}]}}]},"installHw":true,"priority":0,"table_id":22,"match":{}}]},{"id":213,"flow":[{"id":"Fixed_Conntrk_Trk_209745082223692_Tracked_Established17","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":62020,"table_id":213,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":34}}}]}},{"id":"213","flow-name":"Ingress ACL Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":213,"match":{}},{"id":"Fixed_Conntrk_Trk_209745082223692_Tracked_Related17","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":62020,"table_id":213,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":36}}}]}}]},{"id":20,"flow":[{"id":"L3.209745082223692.20.0L3.","flow-name":"Table Miss","idle-timeout":0,"cookie":16973824,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":80}}]},"installHw":true,"priority":0,"table_id":20,"match":{}}]},{"id":212,"flow":[{"id":"212","flow-name":"Ingress ACL Remote Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":213}}]},"installHw":true,"priority":0,"table_id":212,"match":{}}]},{"id":51,"flow":[{"id":"51","flow-name":"ELAN dMac Table Miss Flow","idle-timeout":0,"cookie":134414336,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":52}}]},"installHw":true,"priority":0,"table_id":51,"match":{}},{"id":"20974508222369251l2control01:80:C2:00:00:00FF:FF:FF:FF:FF:F0","flow-name":"L2 control packets dMac Table Flow","idle-timeout":0,"cookie":134414336,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":15,"table_id":51,"match":{"ethernet-match":{"ethernet-destination":{"mask":"FF:FF:FF:FF:FF:F0","address":"01:80:C2:00:00:00"}}}}]},{"id":19,"flow":[{"id":"L3.GW_MAC_TABLE.ARP.209745082223692.19.1L3.","flow-name":"L3GwMac Arp Rquest","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"group-action":{"group-id":5000}}]}}]},"installHw":true,"priority":100,"table_id":19,"match":{"arp-op":1,"ethernet-match":{"ethernet-type":{"type":2054}}}},{"id":"L3.GW_MAC_TABLE.ARP.209745082223692.19.2L3.","flow-name":"L3GwMac Arp Reply","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":1,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}},{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}]}}]},"installHw":true,"priority":100,"table_id":19,"match":{"arp-op":2,"ethernet-match":{"ethernet-type":{"type":2054}}}},{"id":"L3.209745082223692.19.0L3.","flow-name":"L3 Gw Mac Table Miss","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":19,"match":{}}]},{"id":211,"flow":[{"id":"211","flow-name":"Ingress ACL Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":211,"match":{}}]},{"id":243,"flow":[{"id":"Fixed_Conntrk_Trk_209745082223692_Tracked_Related220","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":62020,"table_id":243,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":36}}}]}},{"id":"Fixed_Conntrk_Trk_209745082223692_Tracked_Established220","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":62020,"table_id":243,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":34}}}]}},{"id":"243","flow-name":"Egress ACL Filter Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":243,"match":{}}]},{"id":50,"flow":[{"id":"50","flow-name":"ELAN sMac Table Miss Flow","idle-timeout":0,"cookie":134545408,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":1,"go-to-table":{"table_id":51}},{"order":0,"apply-actions":{"action":[{"order":1,"openflowplugin-extension-nicira-action:nx-learn":{"cookie":140509184,"idle-timeout":0,"fin-idle-timeout":0,"priority":0,"table-id":49,"fin-hard-timeout":0,"hard-timeout":10,"flags":0,"flow-mods":[{"flow-mod-add-match-from-field":{"flow-mod-num-bits":48,"src-field":1030,"dst-field":1030,"src-ofs":0,"dst-ofs":0}},{"flow-mod-add-match-from-field":{"flow-mod-num-bits":20,"src-field":66052,"dst-field":66052,"src-ofs":0,"dst-ofs":0}},{"flow-mod-copy-value-into-field":{"flow-mod-num-bits":8,"dst-field":67588,"dst-ofs":0,"value":1}}]}},{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}]}}]},"installHw":true,"priority":0,"table_id":50,"match":{}},{"id":"50.1","flow-name":"ELAN sMac Table Reg4 Flow","idle-timeout":0,"cookie":134545409,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":51}}]},"installHw":true,"priority":10,"table_id":50,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-reg4-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-reg":{"reg":"nicira-match:nxm-nx-reg4","value":1}}}]}}]},{"id":18,"flow":[{"id":"DHCPTableMissFlowForExternalTunnel","flow-name":"DHCP Table Miss Flow For External Tunnel","idle-timeout":0,"cookie":109051904,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":38}}]},"installHw":true,"priority":0,"table_id":18,"match":{}}]},{"id":242,"flow":[{"id":"242","flow-name":"Egress ACL Remote Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":243}}]},"installHw":true,"priority":0,"table_id":242,"match":{}}]},{"id":17,"flow":[{"id":"L3VPN_to_Elan_Fallback_Default_Rule","flow-name":"L3VPN_to_Elan_Fallback_Default_Rule","idle-timeout":0,"cookie":134217728,"strict":true,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":1,"write-metadata":{"metadata":10376293541461622784,"metadata-mask":17293822569102704640}},{"order":2,"go-to-table":{"table_id":80}}]},"installHw":true,"priority":0,"table_id":17,"match":{"metadata":{"metadata":9223372036854775808,"metadata-mask":17293822569102704640}}}]},{"id":81,"flow":[{"id":"81","flow-name":"Arp_Responder_Drop_Flow","idle-timeout":0,"cookie":136445952,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":81,"match":{}}]},{"id":241,"flow":[{"id":"241","flow-name":"Egress ACL Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":241,"match":{}}]},{"id":48,"flow":[{"id":"48","flow-name":"Elan sMac resubmit table","idle-timeout":0,"cookie":139460608,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":1,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":50}},{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":49}}]}}]},"installHw":true,"priority":0,"table_id":48,"match":{}}]},{"id":80,"flow":[{"id":"L3.209745082223692.80.0L3.","flow-name":"L3 Interface Table Miss","idle-timeout":0,"cookie":16973824,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":80,"match":{}}]},{"id":45,"flow":[{"id":"IPv6TableMissFlow","flow-name":"IPv6 Table Miss Flow","idle-timeout":0,"cookie":67108864,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":45,"match":{}}]},{"id":231,"flow":[{"id":"231_Miss","flow-name":"231_Miss","idle-timeout":0,"cookie":134218289,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":0,"table_id":231,"match":{}}]},{"id":230,"flow":[{"id":"230_Miss","flow-name":"230_Miss","idle-timeout":0,"cookie":134218288,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":0,"table_id":230,"match":{}}]}],"flow-node-inventory:group":[{"group-id":5000,"group-name":"Arp_Responder_Group_Flow","buckets":{"bucket":[{"bucket-id":2,"watch_group":4294967295,"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":81}}],"watch_port":4294967295,"weight":0},{"bucket-id":1,"watch_group":4294967295,"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}],"watch_port":4294967295,"weight":0},{"bucket-id":0,"watch_group":4294967295,"action":[{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}],"watch_port":4294967295,"weight":0}]},"group-type":"group-all"}]},{"id":"openflow:189893924761450","flow-node-inventory:table":[{"id":60,"flow":[{"id":"DHCPTableMissFlow","flow-name":"DHCP Table Miss Flow","idle-timeout":0,"cookie":109051904,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":60,"match":{}}]},{"id":90,"flow":[{"id":"QoSTableMissFlow","flow-name":"QoS Table Miss Flow","idle-timeout":0,"cookie":67108865,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":90,"match":{}}]},{"id":23,"flow":[{"id":"L3.189893924761450.23.0L3.","flow-name":"VPN-VNI Demux Table Miss","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":23,"match":{}}]},{"id":22,"flow":[{"id":"L3.189893924761450.22.0L3.","flow-name":"Subnet Route Table Miss","idle-timeout":0,"cookie":134217732,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}]}}]},"installHw":true,"priority":0,"table_id":22,"match":{}}]},{"id":213,"flow":[{"id":"Fixed_Conntrk_Trk_189893924761450_Tracked_Established17","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":62020,"table_id":213,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":34}}}]}},{"id":"213","flow-name":"Ingress ACL Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":213,"match":{}},{"id":"Fixed_Conntrk_Trk_189893924761450_Tracked_Related17","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":62020,"table_id":213,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":36}}}]}}]},{"id":20,"flow":[{"id":"L3.189893924761450.20.0L3.","flow-name":"Table Miss","idle-timeout":0,"cookie":16973824,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":80}}]},"installHw":true,"priority":0,"table_id":20,"match":{}}]},{"id":212,"flow":[{"id":"212","flow-name":"Ingress ACL Remote Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":213}}]},"installHw":true,"priority":0,"table_id":212,"match":{}}]},{"id":51,"flow":[{"id":"51","flow-name":"ELAN dMac Table Miss Flow","idle-timeout":0,"cookie":134414336,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":52}}]},"installHw":true,"priority":0,"table_id":51,"match":{}},{"id":"18989392476145051l2control01:80:C2:00:00:00FF:FF:FF:FF:FF:F0","flow-name":"L2 control packets dMac Table Flow","idle-timeout":0,"cookie":134414336,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":15,"table_id":51,"match":{"ethernet-match":{"ethernet-destination":{"mask":"FF:FF:FF:FF:FF:F0","address":"01:80:C2:00:00:00"}}}}]},{"id":19,"flow":[{"id":"L3.189893924761450.19.0L3.","flow-name":"L3 Gw Mac Table Miss","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":19,"match":{}},{"id":"L3.GW_MAC_TABLE.ARP.189893924761450.19.1L3.","flow-name":"L3GwMac Arp Rquest","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"group-action":{"group-id":5000}}]}}]},"installHw":true,"priority":100,"table_id":19,"match":{"arp-op":1,"ethernet-match":{"ethernet-type":{"type":2054}}}},{"id":"L3.GW_MAC_TABLE.ARP.189893924761450.19.2L3.","flow-name":"L3GwMac Arp Reply","idle-timeout":0,"cookie":17301504,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":1,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}},{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}]}}]},"installHw":true,"priority":100,"table_id":19,"match":{"arp-op":2,"ethernet-match":{"ethernet-type":{"type":2054}}}}]},{"id":211,"flow":[{"id":"211","flow-name":"Ingress ACL Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":211,"match":{}}]},{"id":243,"flow":[{"id":"Fixed_Conntrk_Trk_189893924761450_Tracked_Established220","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":62020,"table_id":243,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":34}}}]}},{"id":"Fixed_Conntrk_Trk_189893924761450_Tracked_Related220","flow-name":"ACL","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":62020,"table_id":243,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-ct-state-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-ct-state":{"mask":55,"ct-state":36}}}]}},{"id":"243","flow-name":"Egress ACL Filter Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":243,"match":{}}]},{"id":50,"flow":[{"id":"50","flow-name":"ELAN sMac Table Miss Flow","idle-timeout":0,"cookie":134545408,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":1,"go-to-table":{"table_id":51}},{"order":0,"apply-actions":{"action":[{"order":1,"openflowplugin-extension-nicira-action:nx-learn":{"cookie":140509184,"idle-timeout":0,"fin-idle-timeout":0,"priority":0,"table-id":49,"fin-hard-timeout":0,"hard-timeout":10,"flags":0,"flow-mods":[{"flow-mod-add-match-from-field":{"flow-mod-num-bits":48,"src-field":1030,"dst-field":1030,"src-ofs":0,"dst-ofs":0}},{"flow-mod-add-match-from-field":{"flow-mod-num-bits":20,"src-field":66052,"dst-field":66052,"src-ofs":0,"dst-ofs":0}},{"flow-mod-copy-value-into-field":{"flow-mod-num-bits":8,"dst-field":67588,"dst-ofs":0,"value":1}}]}},{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}]}}]},"installHw":true,"priority":0,"table_id":50,"match":{}},{"id":"50.1","flow-name":"ELAN sMac Table Reg4 Flow","idle-timeout":0,"cookie":134545409,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":51}}]},"installHw":true,"priority":10,"table_id":50,"match":{"openflowplugin-extension-general:extension-list":[{"extension-key":"openflowplugin-extension-nicira-match:nxm-nx-reg4-key","extension":{"openflowplugin-extension-nicira-match:nxm-nx-reg":{"reg":"nicira-match:nxm-nx-reg4","value":1}}}]}}]},{"id":18,"flow":[{"id":"DHCPTableMissFlowForExternalTunnel","flow-name":"DHCP Table Miss Flow For External Tunnel","idle-timeout":0,"cookie":109051904,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":38}}]},"installHw":true,"priority":0,"table_id":18,"match":{}}]},{"id":242,"flow":[{"id":"242","flow-name":"Egress ACL Remote Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"go-to-table":{"table_id":243}}]},"installHw":true,"priority":0,"table_id":242,"match":{}}]},{"id":81,"flow":[{"id":"81","flow-name":"Arp_Responder_Drop_Flow","idle-timeout":0,"cookie":136445952,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":81,"match":{}}]},{"id":17,"flow":[{"id":"L3VPN_to_Elan_Fallback_Default_Rule","flow-name":"L3VPN_to_Elan_Fallback_Default_Rule","idle-timeout":0,"cookie":134217728,"strict":true,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":1,"write-metadata":{"metadata":10376293541461622784,"metadata-mask":17293822569102704640}},{"order":2,"go-to-table":{"table_id":80}}]},"installHw":true,"priority":0,"table_id":17,"match":{"metadata":{"metadata":9223372036854775808,"metadata-mask":17293822569102704640}}}]},{"id":241,"flow":[{"id":"241","flow-name":"Egress ACL Table Miss Flow","idle-timeout":0,"cookie":110100480,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"drop-action":{}}]}}]},"installHw":true,"priority":0,"table_id":241,"match":{}}]},{"id":48,"flow":[{"id":"48","flow-name":"Elan sMac resubmit table","idle-timeout":0,"cookie":139460608,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":1,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":50}},{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":49}}]}}]},"installHw":true,"priority":0,"table_id":48,"match":{}}]},{"id":80,"flow":[{"id":"L3.189893924761450.80.0L3.","flow-name":"L3 Interface Table Miss","idle-timeout":0,"cookie":16973824,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":80,"match":{}}]},{"id":45,"flow":[{"id":"IPv6TableMissFlow","flow-name":"IPv6 Table Miss Flow","idle-timeout":0,"cookie":67108864,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}]}}]},"installHw":true,"priority":0,"table_id":45,"match":{}}]},{"id":231,"flow":[{"id":"231_Miss","flow-name":"231_Miss","idle-timeout":0,"cookie":134218289,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":0,"table_id":231,"match":{}}]},{"id":230,"flow":[{"id":"230_Miss","flow-name":"230_Miss","idle-timeout":0,"cookie":134218288,"strict":false,"hard-timeout":0,"barrier":false,"instructions":{"instruction":[{"order":0,"apply-actions":{"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":220}}]}}]},"installHw":true,"priority":0,"table_id":230,"match":{}}]}],"flow-node-inventory:group":[{"group-id":5000,"group-name":"Arp_Responder_Group_Flow","buckets":{"bucket":[{"bucket-id":2,"watch_group":4294967295,"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":81}}],"watch_port":4294967295,"weight":0},{"bucket-id":1,"watch_group":4294967295,"action":[{"order":0,"openflowplugin-extension-nicira-action:nx-resubmit":{"table":17}}],"watch_port":4294967295,"weight":0},{"bucket-id":0,"watch_group":4294967295,"action":[{"order":0,"output-action":{"output-node-connector":"CONTROLLER","max-length":65535}}],"watch_port":4294967295,"weight":0}]},"group-type":"group-all"}]}]}}
 
+#+END_SRC
+#+BEGIN_SRC json
+{
+  "nodes": {
+    "node": [
+      {
+        "id": "openflow:241990178390930",
+        "flow-node-inventory:table": [
+          {
+            "id": 60,
+            "flow": [
+              {
+                "id": "DHCPTableMissFlow",
+                "flow-name": "DHCP Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 109051904,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 17
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 60,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 90,
+            "flow": [
+              {
+                "id": "QoSTableMissFlow",
+                "flow-name": "QoS Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 67108865,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 17
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 90,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 23,
+            "flow": [
+              {
+                "id": "L3.241990178390930.23.0L3.",
+                "flow-name": "VPN-VNI Demux Table Miss",
+                "idle-timeout": 0,
+                "cookie": 17301504,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 17
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 23,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 22,
+            "flow": [
+              {
+                "id": "L3.241990178390930.22.0L3.",
+                "flow-name": "Subnet Route Table Miss",
+                "idle-timeout": 0,
+                "cookie": 134217732,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "output-action": {
+                              "output-node-connector": "CONTROLLER",
+                              "max-length": 65535
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 22,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 213,
+            "flow": [
+              {
+                "id": "Fixed_Conntrk_Trk_241990178390930_Tracked_Established17",
+                "flow-name": "ACL",
+                "idle-timeout": 0,
+                "cookie": 110100480,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 17
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 62020,
+                "table_id": 213,
+                "match": {
+                  "openflowplugin-extension-general:extension-list": [
+                    {
+                      "extension-key": "openflowplugin-extension-nicira-match:nxm-nx-ct-state-key",
+                      "extension": {
+                        "openflowplugin-extension-nicira-match:nxm-nx-ct-state": {
+                          "mask": 55,
+                          "ct-state": 34
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "213",
+                "flow-name": "Ingress ACL Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 110100480,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "drop-action": {
+                              
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 213,
+                "match": {
+                  
+                }
+              },
+              {
+                "id": "Fixed_Conntrk_Trk_241990178390930_Tracked_Related17",
+                "flow-name": "ACL",
+                "idle-timeout": 0,
+                "cookie": 110100480,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 17
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 62020,
+                "table_id": 213,
+                "match": {
+                  "openflowplugin-extension-general:extension-list": [
+                    {
+                      "extension-key": "openflowplugin-extension-nicira-match:nxm-nx-ct-state-key",
+                      "extension": {
+                        "openflowplugin-extension-nicira-match:nxm-nx-ct-state": {
+                          "mask": 55,
+                          "ct-state": 36
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 212,
+            "flow": [
+              {
+                "id": "212",
+                "flow-name": "Ingress ACL Remote Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 110100480,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "go-to-table": {
+                        "table_id": 213
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 212,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 20,
+            "flow": [
+              {
+                "id": "L3.241990178390930.20.0L3.",
+                "flow-name": "Table Miss",
+                "idle-timeout": 0,
+                "cookie": 16973824,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "go-to-table": {
+                        "table_id": 80
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 20,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 211,
+            "flow": [
+              {
+                "id": "211",
+                "flow-name": "Ingress ACL Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 110100480,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "drop-action": {
+                              
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 211,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 243,
+            "flow": [
+              {
+                "id": "Fixed_Conntrk_Trk_241990178390930_Tracked_Related220",
+                "flow-name": "ACL",
+                "idle-timeout": 0,
+                "cookie": 110100480,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 220
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 62020,
+                "table_id": 243,
+                "match": {
+                  "openflowplugin-extension-general:extension-list": [
+                    {
+                      "extension-key": "openflowplugin-extension-nicira-match:nxm-nx-ct-state-key",
+                      "extension": {
+                        "openflowplugin-extension-nicira-match:nxm-nx-ct-state": {
+                          "mask": 55,
+                          "ct-state": 36
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "243",
+                "flow-name": "Egress ACL Filter Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 110100480,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "drop-action": {
+                              
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 243,
+                "match": {
+                  
+                }
+              },
+              {
+                "id": "Fixed_Conntrk_Trk_241990178390930_Tracked_Established220",
+                "flow-name": "ACL",
+                "idle-timeout": 0,
+                "cookie": 110100480,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 220
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 62020,
+                "table_id": 243,
+                "match": {
+                  "openflowplugin-extension-general:extension-list": [
+                    {
+                      "extension-key": "openflowplugin-extension-nicira-match:nxm-nx-ct-state-key",
+                      "extension": {
+                        "openflowplugin-extension-nicira-match:nxm-nx-ct-state": {
+                          "mask": 55,
+                          "ct-state": 34
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 19,
+            "flow": [
+              {
+                "id": "L3.GW_MAC_TABLE.ARP.241990178390930.19.1L3.",
+                "flow-name": "L3GwMac Arp Rquest",
+                "idle-timeout": 0,
+                "cookie": 17301504,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "group-action": {
+                              "group-id": 5000
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 100,
+                "table_id": 19,
+                "match": {
+                  "arp-op": 1,
+                  "ethernet-match": {
+                    "ethernet-type": {
+                      "type": 2054
+                    }
+                  }
+                }
+              },
+              {
+                "id": "L3.GW_MAC_TABLE.ARP.241990178390930.19.2L3.",
+                "flow-name": "L3GwMac Arp Reply",
+                "idle-timeout": 0,
+                "cookie": 17301504,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 1,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 17
+                            }
+                          },
+                          {
+                            "order": 0,
+                            "output-action": {
+                              "output-node-connector": "CONTROLLER",
+                              "max-length": 65535
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 100,
+                "table_id": 19,
+                "match": {
+                  "arp-op": 2,
+                  "ethernet-match": {
+                    "ethernet-type": {
+                      "type": 2054
+                    }
+                  }
+                }
+              },
+              {
+                "id": "L3.241990178390930.19.0L3.",
+                "flow-name": "L3 Gw Mac Table Miss",
+                "idle-timeout": 0,
+                "cookie": 17301504,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 17
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 19,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 51,
+            "flow": [
+              {
+                "id": "24199017839093051l2control01:80:C2:00:00:00FF:FF:FF:FF:FF:F0",
+                "flow-name": "L2 control packets dMac Table Flow",
+                "idle-timeout": 0,
+                "cookie": 134414336,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "drop-action": {
+                              
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 15,
+                "table_id": 51,
+                "match": {
+                  "ethernet-match": {
+                    "ethernet-destination": {
+                      "mask": "FF:FF:FF:FF:FF:F0",
+                      "address": "01:80:C2:00:00:00"
+                    }
+                  }
+                }
+              },
+              {
+                "id": "51",
+                "flow-name": "ELAN dMac Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 134414336,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "go-to-table": {
+                        "table_id": 52
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 51,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 18,
+            "flow": [
+              {
+                "id": "DHCPTableMissFlowForExternalTunnel",
+                "flow-name": "DHCP Table Miss Flow For External Tunnel",
+                "idle-timeout": 0,
+                "cookie": 109051904,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "go-to-table": {
+                        "table_id": 38
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 18,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 242,
+            "flow": [
+              {
+                "id": "242",
+                "flow-name": "Egress ACL Remote Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 110100480,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "go-to-table": {
+                        "table_id": 243
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 242,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 50,
+            "flow": [
+              {
+                "id": "50",
+                "flow-name": "ELAN sMac Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 134545408,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 1,
+                      "go-to-table": {
+                        "table_id": 51
+                      }
+                    },
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 1,
+                            "openflowplugin-extension-nicira-action:nx-learn": {
+                              "cookie": 140509184,
+                              "idle-timeout": 0,
+                              "fin-idle-timeout": 0,
+                              "priority": 0,
+                              "table-id": 49,
+                              "fin-hard-timeout": 0,
+                              "hard-timeout": 10,
+                              "flags": 0,
+                              "flow-mods": [
+                                {
+                                  "flow-mod-add-match-from-field": {
+                                    "flow-mod-num-bits": 48,
+                                    "src-field": 1030,
+                                    "dst-field": 1030,
+                                    "src-ofs": 0,
+                                    "dst-ofs": 0
+                                  }
+                                },
+                                {
+                                  "flow-mod-add-match-from-field": {
+                                    "flow-mod-num-bits": 20,
+                                    "src-field": 66052,
+                                    "dst-field": 66052,
+                                    "src-ofs": 0,
+                                    "dst-ofs": 0
+                                  }
+                                },
+                                {
+                                  "flow-mod-copy-value-into-field": {
+                                    "flow-mod-num-bits": 8,
+                                    "dst-field": 67588,
+                                    "dst-ofs": 0,
+                                    "value": 1
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "order": 0,
+                            "output-action": {
+                              "output-node-connector": "CONTROLLER",
+                              "max-length": 65535
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 50,
+                "match": {
+                  
+                }
+              },
+              {
+                "id": "50.1",
+                "flow-name": "ELAN sMac Table Reg4 Flow",
+                "idle-timeout": 0,
+                "cookie": 134545409,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "go-to-table": {
+                        "table_id": 51
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 10,
+                "table_id": 50,
+                "match": {
+                  "openflowplugin-extension-general:extension-list": [
+                    {
+                      "extension-key": "openflowplugin-extension-nicira-match:nxm-nx-reg4-key",
+                      "extension": {
+                        "openflowplugin-extension-nicira-match:nxm-nx-reg": {
+                          "reg": "nicira-match:nxm-nx-reg4",
+                          "value": 1
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 241,
+            "flow": [
+              {
+                "id": "241",
+                "flow-name": "Egress ACL Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 110100480,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "drop-action": {
+                              
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 241,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 17,
+            "flow": [
+              {
+                "id": "L3VPN_to_Elan_Fallback_Default_Rule",
+                "flow-name": "L3VPN_to_Elan_Fallback_Default_Rule",
+                "idle-timeout": 0,
+                "cookie": 134217728,
+                "strict": true,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 1,
+                      "write-metadata": {
+                        "metadata": 10376293541461622784,
+                        "metadata-mask": 17293822569102704640
+                      }
+                    },
+                    {
+                      "order": 2,
+                      "go-to-table": {
+                        "table_id": 80
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 17,
+                "match": {
+                  "metadata": {
+                    "metadata": 9223372036854775808,
+                    "metadata-mask": 17293822569102704640
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": 81,
+            "flow": [
+              {
+                "id": "81",
+                "flow-name": "Arp_Responder_Drop_Flow",
+                "idle-timeout": 0,
+                "cookie": 136445952,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "drop-action": {
+                              
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 81,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 48,
+            "flow": [
+              {
+                "id": "48",
+                "flow-name": "Elan sMac resubmit table",
+                "idle-timeout": 0,
+                "cookie": 139460608,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 1,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 50
+                            }
+                          },
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 49
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 48,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 80,
+            "flow": [
+              {
+                "id": "L3.241990178390930.80.0L3.",
+                "flow-name": "L3 Interface Table Miss",
+                "idle-timeout": 0,
+                "cookie": 16973824,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 17
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 80,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 45,
+            "flow": [
+              {
+                "id": "IPv6TableMissFlow",
+                "flow-name": "IPv6 Table Miss Flow",
+                "idle-timeout": 0,
+                "cookie": 67108864,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 17
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 45,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 231,
+            "flow": [
+              {
+                "id": "231_Miss",
+                "flow-name": "231_Miss",
+                "idle-timeout": 0,
+                "cookie": 134218289,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 220
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 231,
+                "match": {
+                  
+                }
+              }
+            ]
+          },
+          {
+            "id": 230,
+            "flow": [
+              {
+                "id": "230_Miss",
+                "flow-name": "230_Miss",
+                "idle-timeout": 0,
+                "cookie": 134218288,
+                "strict": false,
+                "hard-timeout": 0,
+                "barrier": false,
+                "instructions": {
+                  "instruction": [
+                    {
+                      "order": 0,
+                      "apply-actions": {
+                        "action": [
+                          {
+                            "order": 0,
+                            "openflowplugin-extension-nicira-action:nx-resubmit": {
+                              "table": 220
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                "installHw": true,
+                "priority": 0,
+                "table_id": 230,
+                "match": {
+                  
+                }
+              }
+            ]
+          }
+        ],
+        "flow-node-inventory:group": [
+          {
+            "group-id": 5000,
+            "group-name": "Arp_Responder_Group_Flow",
+            "buckets": {
+              "bucket": [
+                {
+                  "bucket-id": 2,
+                  "watch_group": 4294967295,
+                  "action": [
+                    {
+                      "order": 0,
+                      "openflowplugin-extension-nicira-action:nx-resubmit": {
+                        "table": 81
+                      }
+                    }
+                  ],
+                  "watch_port": 4294967295,
+                  "weight": 0
+                },
+                {
+                  "bucket-id": 1,
+                  "watch_group": 4294967295,
+                  "action": [
+                    {
+                      "order": 0,
+                      "openflowplugin-extension-nicira-action:nx-resubmit": {
+                        "table": 17
+                      }
+                    }
+                  ],
+                  "watch_port": 4294967295,
+                  "weight": 0
+                },
+                {
+                  "bucket-id": 0,
+                  "watch_group": 4294967295,
+                  "action": [
+                    {
+                      "order": 0,
+                      "output-action": {
+                        "output-node-connector": "CONTROLLER",
+                        "max-length": 65535
+                      }
+                    }
+                  ],
+                  "watch_port": 4294967295,
+                  "weight": 0
+                }
+              ]
+            },
+            "group-type": "group-all"
+          }
+        ]
+      }
+    ]
+  }
+}
 #+END_SRC
