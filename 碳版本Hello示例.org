@@ -1,0 +1,75 @@
+#+AUTHOR:      lhl
+#+TITLE:       碳版本Hello示例
+#+EMAIL: luhailong@inspur.com
+#+KEYWORDS: odl, rpc
+#+OPTIONS: H:4 toc:t num:t
+
+
+本文源自：https://wiki.opendaylight.org/view/OpenDaylight_Controller:MD-SAL:Startup_Project_Archetype part2
+
+* 构建Hello项目
+** 执行构建项目命令
+#+BEGIN_SRC shell
+mvn archetype:generate -DarchetypeGroupId=org.opendaylight.controller 
+-DarchetypeArtifactId=opendaylight-startup-archetype 
+-DarchetypeRepository=http://nexus.opendaylight.org/content/repositories/opendaylight.release 
+-DarchetypeCatalog=remote -DarchetypeVersion=1.3.1-Carbon
+#+END_SRC
+
+** 输入交互信息
+#+BEGIN_SRC shell
+Define value for property 'groupId': org.opendaylight.hello
+Define value for property 'artifactId': hello
+[INFO] Using property: version = 0.1.0-SNAPSHOT
+Define value for property 'package' org.opendaylight.hello: :
+Define value for property 'classPrefix' Hello: : hello
+Define value for property 'copyright': No
+[INFO] Using property: copyrightYear = 2017
+Confirm properties configuration:
+groupId: org.opendaylight.hello
+artifactId: hello
+version: 0.1.0-SNAPSHOT
+package: org.opendaylight.hello
+classPrefix: hello
+copyright: No
+copyrightYear: 2017
+ Y: : Y
+#+END_SRC
+
+或者: 根据 opendaylight-startup-archetype在nexus私服(https://nexus.opendaylight.org)查询的坐标信息.
+#+BEGIN_SRC json
+<dependency>
+  <groupId>org.opendaylight.controller</groupId>
+  <artifactId>opendaylight-startup-archetype</artifactId>
+  <version>1.3.0-Carbon</version>
+</dependency>
+
+#+END_SRC
+
+* 构建Hello项目
+** 命令
+#+BEGIN_SRC java
+mvn clean install -Dmaven.test.failure.ignore=true
+#+END_SRC  
+
+** 成功后提示
+#+BEGIN_VERSE
+[INFO] --- maven-site-plugin:3.6:attach-descriptor (generate-site) @ hello-aggregator ---
+[INFO] Attaching 'src\site\site.xml' site descriptor with classifier 'site'.
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO]
+[INFO] ODL :: org.opendaylight.hello :: hello-api ......... SUCCESS [ 19.565 s]
+[INFO] ODL :: org.opendaylight.hello :: hello-impl ........ SUCCESS [  8.826 s]
+[INFO] ODL :: org.opendaylight.hello :: hello-cli ......... SUCCESS [  8.878 s]
+[INFO] ODL :: org.opendaylight.hello :: hello-features .... SUCCESS [15:41 min]
+[INFO] ODL :: org.opendaylight.hello :: hello-karaf ....... SUCCESS [ 41.676 s]
+[INFO] ODL :: org.opendaylight.hello :: hello-artifacts ... SUCCESS [  1.794 s]
+[INFO] ODL :: org.opendaylight.hello :: hello-it .......... SUCCESS [03:38 min]
+[INFO] hello .............................................. SUCCESS [ 23.209 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 21:07 min
+#+END_VERSE
+
