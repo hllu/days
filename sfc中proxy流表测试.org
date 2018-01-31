@@ -1,0 +1,83 @@
+#+AUTHOR:      luhailong
+#+TITLE:       sfc流表分析
+#+EMAIL: luhailong@inspur.com
+#+KEYWORDS: odl, sfc
+#+OPTIONS: H:4 toc:t num:t
+
+* sfc的组网
+
+#+BEGIN_SRC bash
+#
+#  +-------+-------------------+-------+     +-----------------------------------+  
+#  |                                   |     |                                   |  
+#  |               Proxy               |     |          Service Function         |  
+#  |               NSH  aware          |     |       (nsh unaware)               |  
+#  |                                   |     |                                   |  
+#  +-----------------+-----------------+     +-------+-------------------+-------+  
+#                    |                               |                   |          
+#                    |                               |                   |          
+#          unencapsulated interface           encapsulated          encapsulated    
+#                    |                        out                   in              
+#                  ^ | |                             |  ^                | |        
+#                  | | |                             |  |                | |        
+#                  | | v                             |  |                | v        
+#                    |                               |                   |          
+# +----------+------------------------------------------------------------------+ Network
+#
+#+END_SRC
+
+
+* sfc流表分析
+** 进入proxy方向流表
+- 通过隧道口2来的报文，写metadata后，走36号流表
+#+BEGIN_SRC bash
+cookie=0x8000001, table=0, priority=5,tun_src=192.168.100.11,in_port=2 actions=write_metadata:0x80000000001/0xfffff0000000001,goto_table:36
+#+END_SRC
+
+- 如果是eth + nsh封装， 隧道id为0， 走100号流表
+#+BEGIN_SRC bash
+cookie=0xf005ba1100000006, table=36, priority=10,encap_eth_type=0x894f,tun_id=0 actions=resubmit(,100)
+#+END_SRC
+
+- 直接跳到83号流表
+#+BEGIN_SRC bash
+cookie=0xf005ba1100000001,  table=100,  priority=510,encap_eth_type=0x894f actions=resubmit(,83)
+#+END_SRC
+
+- 83号流表，根据不同的nsp到走86号表
+#+BEGIN_SRC bash
+cookie=0x14, table=83,  priority=250,nsp=109 actions=goto_table:86
+#+END_SRC
+
+- 封装eth头后走87号
+#+BEGIN_SRC bash
+cookie=0x14, table=86,  priority=550,nsi=255,nsp=109 actions=load:0xfe163ed478e1->NXM_NX_ENCAP_ETH_SRC[],load:0xfa163ed478e1->NXM_NX_ENCAP_ETH_DST[],goto_table:87
+#+END_SRC
+
+- 对不同的nsp，记reg6寄存器，后走220号流表
+#+BEGIN_SRC bash
+cookie=0xba5eba1100000202,  table=87,  priority=650,nsi=255,nsp=109 actions=load:0x600->NXM_NX_REG6[],resubmit(,220)
+#+END_SRC
+
+- 根据不同的reg6值，走不同的出口，这里，刚入的eth+nsh报文，送入proxy的port
+#+BEGIN_SRC bash
+cookie=0xf005ba1100000003,  table=220,  priority=8,reg6=0x600 actions=output:69
+
+#+END_SRC
+
+
+** 出proxy方向流表
+
+- proxy送出的报文，根据是否有vlanid，走不同的路径，带vlanid的报文，送到sf，sf回应的带vlanid的报文，送回proxy
+#+BEGIN_SRC bash
+cookie=0x14, duration=2305.581s, table=0, n_packets=127, n_bytes=12954, priority=3,in_port=76 actions=output:69
+
+cookie=0x14, duration=2305.581s, table=0, n_packets=23232, n_bytes=5246844, priority=200,in_port=69 actions=output:76
+
+cookie=0x8000000, table=0,  priority=4,in_port=229,vlan_tci=0x0000/0x1fff actions=write_metadata:0xb0000000000/0xffffff0000000001,goto_table:17
+
+#+END_SRC
+
+后面的流表，走sfc的正常转发流程，报文流向下一个sf
+
+
