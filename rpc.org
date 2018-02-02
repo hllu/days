@@ -1,3 +1,4 @@
+# -*- org -*-
 #+AUTHOR:      the author (default taken from user-full-name)
 #+TITLE:       ODL中RPC的实现
 #+EMAIL: luhailong@inspur.com

@@ -1,8 +1,9 @@
-#+AUTHOR:      luhailong
+#+Author:      luhailong
 #+TITLE:       sfc流表分析
 #+EMAIL: luhailong@inspur.com
 #+KEYWORDS: odl, sfc
 #+OPTIONS: H:4 toc:t num:t
+
 
 * sfc的组网
 

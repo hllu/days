@@ -1,0 +1,88 @@
+#+Title: OVS 常用命令
+
+* 如何添加OVS和PORT;
+#+BEGIN_SRC bash
+
+   ovs-vsctl add-br br0
+   ovs-vsctl del-br br0 
+   ovs-vsctl list-br 
+   ovs-vsctl add-port br0 eth0
+   ovs-vsctl set port eth0 tag=1//vlan id
+   ovs-vsctl del-port br0 eth0
+   ovs-vsctl list-ports br0 
+   ovs-vsctl show //显示所有端口的vlan属性
+#+END_SRC
+   
+* 如何配置QOS，比如队列和限速;
+#+BEGIN_SRC bash
+  sudo ovs-vsctl -- set Port eth2 qos=@newqos  -- --id=@newqos create QoS type=linux-htb other-config:max-rate=1000000000 queues=0=@q0,1=@q1 -- --id=@q0 create  Queue dscp =1 other-config:min-rate=100000000 other-config:max-rate=100000000 -- --id=@q1 create Queue other-config:min-rate=500000000
+  ovs-vsctl clear Port eth2 qos
+
+  sudo ovs-vsctl list qos
+  sudo ovs-vsctl destroy qos _uuid
+  sudo ovs-vsctl list qos
+  sudo ovs-vsctl destroy queue _uuid
+#+END_SRC
+
+
+*  如何配置流镜像;
+#+BEGIN_SRC bash
+   sudo ovs-vsctl -- set Bridge br-int mirrors=@m -- --id=@tap6a094914-cd get Port tap6a094914-cd -- --id=@tap73e945b4-79 get Port tap73e945b4-79 -- --id=@tapa6cd1168-a2 get Port tapa6cd1168-a2 -- --id=@m create Mirror name=mymirror select-dst-port=@tap6a094914-cd,@tap73e945b4-79 select-src-port=@tap6a094914-cd,@tap73e945b4-79 output-port=@tapa6cd1168-a2
+
+
+   sudo ovs-vsctl remove Bridge br0 mirrors mymirror
+   sudo ovs-vsctl clear Bridge br-int mirrors
+#+END_SRC
+
+
+* 如何配置流监控sflow;
+#+BEGIN_SRC bash
+   sudo ovs-vsctl -- --id=@s create sFlow agent=eth2 target=\"10.0.0.1:6343\" header=128 sampling=64 polling=10  -- set Bridge br-int sflow=@s
+   sudo ovs-vsctl -- clear Bridge br-int sflow
+
+#+END_SRC
+
+*  如何配置流规则
+#+BEGIN_SRC bash；
+    sudo ovs-ofctl add-flow br-int idle_timeout=0,in_port=2,dl_type=0x0800,dl_src=00:88:77:66:55:44,dl_dst=11:22:33:44:55:66,nw_src=1.2.3.4,nw_dst=5.6.7.8,nw_proto=1,tp_src=1,tp_dst=2,actions=drop
+    sudo ovs-ofctl del-flows br-int in_port=2 //in_port=2的所有流规则被删除
+    sudo ovs-ofctl  dump-ports br-int
+    sudo ovs-ofctl  dump-flows br-int
+    sudo ovs-ofctl show br-int //查看端口号
+    支持字段还有nw_tos,nw_ecn,nw_ttl,dl_vlan,dl_vlan_pcp,ip_frag，arp_sha,arp_tha,ipv6_src,ipv6_dst等;
+    支持流动作还有output：port，mod_dl_src/mod_dl_dst,set field等;
+#+END_SRC
+
+* 如何查看OVS的配置
+#+BEGIN_SRC bash
+    ovs-vsctl list/set/get/add/remove/clear/destroy table record column [VALUE]
+
+    TABLE名有bridge,controller,interface,mirror,netflow,open_vswitch,port,qos,queue,ssl,sflow
+#+END_SRC
+
+*  配置vxlan gre和ip address
+#+BEGIN_SRC bash
+   ovs-vsctl add-port br-ex port -- set interface port type=vxlan options:remote_ip=192.168.100.3
+
+   ovs−vsctladd−port br-ex port −− set Interface port type=greoptions:remote_ip=192.168.100.3
+
+   ovs−vsctladd−port br-ex port tag=10 −− set Interface port type=internal//默认为access
+
+   ifconfig port 192.168.100.1
+#+END_SRC
+
+* 显示并学习MAC
+#+BEGIN_SRC bash
+   ovs-appctl fdb/show br-ex
+#+END_SRC
+
+* 设置控制器地址
+#+BEGIN_SRC bash
+ovs-vsctl set-controller br-ex tcp:192.168.100.1:6633
+
+ovs-vsctl get-controller br0
+
+ovs-controller ptcp:6633:192.100.100.1
+#+END_SRC
+
+*   其他更多信息请参见man ovs-vsctl 和man ovs-ofctl 
