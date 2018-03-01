@@ -1,0 +1,13 @@
+#+AUTHOR: lhl
+#+TITLE:  bundle之间调用的几种方法
+#+EMAIL: luhailong@inspur.com
+#+KEYWORDS: odl, rpc
+#+OPTIONS: H:4 toc:t num:t
+
+* 之间调用
+
+* rpc调用
+
+* notification
+
+
