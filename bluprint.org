@@ -1,0 +1,162 @@
+# -*- org -*-
+#+AUTHOR:      the author (default taken from user-full-name)
+#+TITLE:       Blueprint
+#+EMAIL: luhailong@inspur.com
+#+KEYWORDS: odl, rpc
+#+OPTIONS: H:4 toc:t num:t
+
+* 简介
+ 在osgi中服务的使用有多种方式，如使用传统的注册式服务，就是我们之前中example不断使用的使用方式，还是osgi中的声明式服务，
+ 还有著名的ipojo等等，但在这里值得花一番笔墨来讲解的应该是blueprint，说到blueprint，务必需要提及一下spring，在个人印象中，
+ spring框架几乎成为了java这么多框架中最为有名的一个，传统上提出的ssh，几乎就只剩下spring一个还非常强力的存活着，而且本身
+ 提供的功能也越来越丰富，子项目中springboot也快成为业界微服务一大选择，而在osgi中，spring最初也有所涉及，为spring dm，
+ blueprint产生的规范便是起源于spring dm，随后好像spring dm没有继续发展，但是blueprint却是一直存在目前，Blueprint规范主要
+ 有两个实现：Aries blueprint和Gemini blueprint，它们分别来自Apache和Eclipse两个开源组织。我们日后讲的基本都是Apache官网
+ 中的blueprint，具体的地址如下：apache blueprint,讲的时候基本不会单独讲解blueprint，会将其他一些东西串起来讲出来，具体到
+ 日后讲解其他的时候再说。
+
+
+* service
+
+** 发布一个服务
+#+BEGIN_SRC json
+<?xml version="1.0" encoding="UTF-8"?>  
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd" default-timeout="0">  
+    <!--最简单的osgi服务注册 -->  
+    <bean id="coder" class="com.ponder.CoderImpl"/>  
+    <service id="CoderService" ref="coder" interface="com.ponder.ICoder"/>  
+    <!--Embeded bean的osgi服务注册 -->  
+    <service id="CoderService2" interface="com.ponder.ICoder">  
+        <bean class="com.ponder.CoderImpl"/>  
+    </service>
+  
+    <!--带osgi服务属性的服务-->  
+    <service id="CoderService3" interface="com.ponder.ICoder">  
+        <service-properties>  
+            <entry key="param01" value="val01"/>  
+            <entry key="param02" value="val02"/>  
+            <entry key="param03">  
+            <array value-type="java.lang.String">  
+            <value>val03-1</value>  
+            <value>val03-2</value>  
+            <value>val03-3</value>  
+            </array>  
+        </entry>  
+        </service-properties>  
+        <bean class="com.ponder.CoderImpl"/>  
+    </service>  
+
+    <!-- 没将接口抽离出来的osgi服务,会将com.ponder.CoderImpl里的所有public方法都作为服务的方法 -->  
+    <service id="CoderService3"  interface="com.ponder.CoderImpl">  
+        <bean class="com.ponder.CoderImpl"/>  
+    </service>  
+</blueprint>  
+#+END_SRC
+
+
+在上例中，我们举了三个发布OSGI service的例子，最简单的例子就先用bean节点定义那个服务的实现类，并给这个bean定义一个
+id（“coder”），然后在service节点用interface属性指明对应的接口，并用ref属性来引用刚才定义的那个bean。这样Blueprint
+container就可以往OSGI framework里注册发布这个服务了。 
+
+
+    第二个例子中，则是将bean节点直接嵌入service节点中，而不需用bean的id和service节点属性ref了。 
+
+    第三个例子则给service添加了service-property,这个service-property和bean节点的property不同，它不出现在java代码里，只是
+在Blueprint往OSGI framework里注册这个服务时，以map的形式附带上这些service-property。这些service-property可以在服务被引用
+时，作为filter的条件。 
+
+
+    服务被发布后，在Blueprint里，可以用reference节点来引用用这些服务。 
+
+
+** 引用一个服务
+
+#+BEGIN_SRC json
+<?xml version="1.0" encoding="UTF-8"?>  
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd" default-timeout="0">  
+
+    <!--引用osgi服务,并注入bean(com.ponder.Processor)里 -->  
+    <reference id="coderService" filter=”（param01=val02）” interface="com.ponder.ICoder" timeout="0"/>  
+    <bean id="processor" class="com.ponder.Processor">  
+        <!--与这里对应，类com.ponder.Processor里应定义有以下属性：  
+        private com.ponder.ICoder coder;  
+        并包含其setter。  
+        -->  
+        <property name="coder" ref="coderService"/>  
+    </bean>  
+      
+</blueprint>  
+#+END_SRC
+
+请留意上例reference节点中的filter:OSGI framework里可以有多个实现相同interface的服务，这里的filter就限定了这个reference节
+点只引用包含一个名为param01,而且值为val01的service-property的那个服务。
+
+* RPC
+** Global RPC注册
+
+#+BEGIN_SRC json
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+                 xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
+
+  <bean id="fooRpcService" class="org.opendaylight.app.FooRpcServiceImpl">
+    <!-- constructor args -->
+  </bean>
+
+  <odl:rpc-implementation ref="fooRpcService"/>
+</blueprint>
+#+END_SRC
+
+** Global RPC的获取
+#+BEGIN_SRC json
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+                 xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
+
+  <odl:rpc-service id="fooRpcService" interface="org.opendaylight.app.FooRpcService"/>
+
+  <bean id="bar" class="org.opendaylight.app.Bar">
+    <argument ref="fooRpcService"/>
+  </bean>
+
+</blueprint>
+#+END_SRC
+
+
+** Routed RPC的注册
+
+
+#+BEGIN_SRC json
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+                 xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
+
+  <bean id="fooRoutedRpcService" class="org.opendaylight.app.FooRoutedRpcServiceImpl">
+    <!-- constructor args -->
+  </bean>
+
+  <odl:routed-rpc-implementation id="fooRoutedRpcServiceReg" ref="fooRoutedRpcService"/>
+
+  <bean id="bar" class="org.opendaylight.app.Bar">
+    <argument ref="fooRoutedRpcServiceReg"/>
+  </bean>
+
+</blueprint>
+#+END_SRC
+
+* NotificationListenser
+** NotificationListenser的注册
+#+BEGIN_SRC json
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+                 xmlns:odl="http://opendaylight.org/xmlns/blueprint/v1.0.0">
+
+  <bean id="fooListener" class="org.opendaylight.app.FooNotificationListener">
+    <!-- constructor args -->
+  </bean>
+
+  <odl:notification-listener ref="fooListener"/>
+
+</blueprint>
+#+END_SRC
+
