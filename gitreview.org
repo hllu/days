@@ -1,0 +1,211 @@
+# -*- org -*-
+#+AUTHOR:     lhl
+#+TITLE:      Title: Git review安装使用说明
+#+EMAIL: luhailong@inspur.com
+#+KEYWORDS: odl, rpc
+#+OPTIONS: H:4 toc:t num:t
+
+* 安装
+** git安装略过
+** 安装git-review
+[root@master ~]# yum install git-review
+Loaded plugins: fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * epel: mirrors.aliyun.com
+Resolving Dependencies
+--> Running transaction check
+---> Package git-review.noarch 0:1.24-5.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+=================================================================================================================================================================================================
+ Package                                          Arch                                         Version                                          Repository                                  Size
+=================================================================================================================================================================================================
+Installing:
+ git-review                                       noarch                                       1.24-5.el7                                       epel                                        57 k
+
+Transaction Summary
+=================================================================================================================================================================================================
+Install  1 Package
+
+** 安装gitweb
+    1）# yum install gitweb
+    2）修改git.conf
+       # vi /etc/httpd/conf.d/git.conf
+       将 "Alias /git /var/www/git" 改为 "Alias /gitweb /var/www/git"
+    3）修改gitweb.conf
+       # vi /etc/gitweb.conf
+       将$projectroot = "/home/xxx" 设置为git代码库所在的文件夹，这里我们设置为gerrit配置的代码库路径/data1/gerrit2.8.4/git
+
+** 安装gerrit
+下载gerrit安装包
+gerrit的下载地址:
+https://www.gerritcodereview.com/releases/README.md
+我使用的gerrit版本是2.15.1。 下载完成之后会发现是一个war的包，所以我们的Java环境一定要安装正确。
+新建gerrit专用用户
+新建一个用户用来专门管理gerrit相关的内容。
+在root用户（或者使用 sudo 命令）下面输入下面的命令:
+#+BEGIN_SRC bash
+$ adduser gerrit
+$ su gerrit
+
+#+END_SRC
+建好用户以后，我们可以把之前下载好的gerrit安装包拷贝到/home/gerrit/目录下，一会方便gerrit用户来安装。
+安装gerrit
+在gerrit用户的目录(/home/gerrit/)下面，执行下面的命令：
+#+BEGIN_SRC bash
+$ java -jar gerrit-2.13.4.war init -d ~/gerrit_site
+#+END_SRC
+
+这个命令的意思是执行安装gerrit，会在当前目录下新建一个文件夹gerrit_site用来作为gerrit的根目录，在这个目录中，会安装git仓库，以及gerrit的web页面，还有gerrit的bin，etc等文件夹。
+然后就开始安装过程了，安装的过程会询问很多问题，有一些判断性的问题会用[y/N]这样的形式，大写的字母表示默认，我们直接敲回车就表示采用默认的安装选项。
+注意：
+我们安装的时候，可以只在 Authentication method 时输入 http ，其他全部回车用默认值，因为其他配置我们待会可以通过 etc/gerrit.config 文件进行修改
+期间可能会下载两个文件，这两个文件虽然都很小(不到3M)，但是可能是因为GFW的原因，下载速度很慢。你可以到 /lib 文件夹下面查看他们是不是已经下载完了，或者你手动把那两个文件下载完之后，scp到 /lib 下面。 
+如果你发现已经下完了，但是安装过程卡主了，没有关系，直接 ctrl+c 然后重新安装就可以了。
+
+
+* 安装OpenLDAP
+安装 openldap 是一个比较独立的工作，一般公司都已经部署了 ldap，那么可以直接跳过这一步。由于 gtt 在的公司还没有，为了方便
+内部使用，决定自行安装一个，未来用户修改密码也方便。
+
+** 安装并启动
+#+BEGIN_SRC bash
+yum -y install *openldap*
+
+systemctl enable slapd
+systemctl status slapd
+
+# 确认 389 端口开启
+ ss -antp|grep 389
+LISTEN     0      128                       *:389                      *:*      users:(("slapd",14846,8))
+
+#+END_SRC
+
+** 生成一个 ldap 的 “root” 密码
+这里只是生成，还没有设置到系统中，建议开一个记事本记住备用。如果你的密码和我不一样，最后的 {SSHA} 内容肯定不一样，这里主意不要直接复制。
+
+#+BEGIN_SRC bash
+# slappasswd
+New password:
+Re-enter new password:
+{SSHA}bHSiwuPJEypHS6zHSE2Uy7M69sQjmkPL
+#+END_SRC
+
+
+** 正式修改 dn 和 “root” 用户密码
+#+BEGIN_SRC bash
+# vim /etc/openldap/slapd.d/cn\=config/olcDatabase\=\{2\}hdb.ldif
+将 olcSuffix 和 olcRootDN 修改成我们需要的数据
+olcSuffix: dc=gaott,dc=info
+olcRootDN: cn=Manager,dc=gaott,dc=info
+#+END_SRC
+
+** 在同一个文件中新加一行写明 Manager 用户的密码
+这里的 Manager 就是 ldap 系统中 gaott.info 目录的 root 用户，所以上文一直使用引号的 root。内容写记事本中记录的 {SSHA} 那
+串。
+#+BEGIN_SRC bash
+olcRootPW: {SSHA}bHSiwuPJEypHS6zHSE2Uy7M69sQjmkPL
+#+END_SRC
+
+** 修改 /etc/openldap/slapd.d/cn=config/olcDatabase={1}monitor.ldif 文件中的 olcAccess 内容
+将所有 dc=my-domain,dc=com 替换成 dc=gaott,dc=info
+#+BEGIN_SRC bash
+olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=extern
+ al,cn=auth" read by dn.base="cn=Manager,dc=gaott,dc=info" read by * none
+#+END_SRC
+
+** 确认配置全部正确
+#+BEGIN_SRC bash
+# slaptest -u
+578ce784 ldif_read_file: checksum error on "/etc/openldap/slapd.d/cn=config/olcDatabase={1}monitor.ldif"
+578ce784 ldif_read_file: checksum error on "/etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif"
+config file testing succeeded
+#+END_SRC
+
+** 复制默认的数据库配置文件
+#+BEGIN_SRC bash
+[root@linux1 cn=config]# cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
+[root@linux1 cn=config]# chown -R ldap:ldap /var/lib/ldap/
+#+END_SRC
+** 新增默认的 schema
+#+BEGIN_SRC bash
+
+
+[root@linux1 cn=config]# ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
+[root@linux1 cn=config]# ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif
+[root@linux1 cn=config]# ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
+#+END_SRC
+
+** 生成初始化的 ldap 数据: /root/base.ldif
+#+BEGIN_SRC bash
+dn: dc=gaott,dc=info
+objectClass: top
+objectClass: dcObject
+objectclass: organization
+o: gaott.info
+dc: gaott
+
+dn: cn=Manager,dc=gaott,dc=info
+objectClass: organizationalRole
+cn: Manager
+description: Directory Manager
+
+dn: ou=people,dc=gaott,dc=info
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=group,dc=gaott,dc=info
+objectClass: organizationalUnit
+ou: group
+#+END_SRC
+
+** 新增一个用户作为 gerrit 的管理员 /root/user.ldif
+#+BEGIN_SRC bash
+dn: cn=test,ou=people,dc=gaott,dc=info
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+cn: test
+displayName: test user
+userPassword: test@superpassword!
+mail: test@gaott.info
+sn: test
+#+END_SRC
+
+** 使用之前设置的 “root” 用户权限插入 base.ldif 和 user.ldif
+会提示让你输入密码，密码就是之前 slappasswd 时输入的。
+#+BEGIN_SRC bash
+ldapadd -x -W -D "cn=Manager,dc=gaott,dc=info" -f /root/base.ldif
+ldapadd -x -W -D "cn=Manager,dc=gaott,dc=info" -f /root/user.ldif
+#+END_SRC
+
+
+** 测试数据是否插入成功，如果搜索到对应用户，说明 ldap 安装成功。
+#+BEGIN_SRC bash
+ldapsearch -x cn=test -b dc=gaott,dc=info
+#+END_SRC
+
+在本文中 ldap 作为 gerrit 的用户认证中心，所以只有 LDAP 系统中有的用户才能登陆 gerrit，换言之，老用户修改密码只能通过
+LDAP 修改，新增用户也只能通过 LDAP 系统新增，gerrit 中是不能做相应操作的。
+
+
+ 
+* 重新启动服务
+** nginx
+service nginx restart
+
+** gerrit
+ /home/gerrit/gerrit_site/bin/gerrit.sh restart
+
+** 新增一个用户
+ htpasswd -m /home/gerrit/gerrit.password master
+
+
+* gerrit运维
+** 通过gerrit set-account修改用户
+#+BEGIN_SRC bash
+ssh ha gerrit set_account --add-email user99@163.com user99
+#+END_SRC

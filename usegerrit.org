@@ -1,0 +1,94 @@
+# -*- org -*-
+#+AUTHOR:     lhl
+#+TITLE:      Title: Gerrit使用说明
+#+EMAIL: luhailong@inspur.com
+#+KEYWORDS: odl, rpc
+#+OPTIONS: H:4 toc:t num:t
+* 登录gerrit界面,并上传自己的ssh公钥
+** 登录地址端口
+#+BEGIN_SRC bash
+http://172.23.27.11:8080
+#+END_SRC
+
+** 找到自己的公钥并
+类似以下地址
+C:\Users\luhailong\.ssh\id_rsa.pub
+
+** copy公钥到gerrit中gerrit设置公钥的界面
+[[./jpg/pub1.png]]
+
+[[./jpg/pub2.png]]
+
+[[./jpg/pub3.png]]
+
+
+* 下载工程
+在本地找一个放置代码的位置，在这个路径下载代码。下载的时候，必须用带hooks的命令，否则需要后面自己手动copy过来。
+#+BEGIN_SRC java
+git clone ssh://luhailong@172.23.27.11:29418/hni && scp -p -P 29418 luhailong@172.23.27.11:hooks/commit-msg hni/.git/hooks/
+#+END_SRC
+
+* 使用git管理代码
+
+
+* 提交代码
+提交代码时候，gerrit不允许直接push上去，需要push到refs/for/master，经过评审后才能合入代码。
+
+#+BEGIN_SRC bash
+$  git push origin HEAD:refs/for/master
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 351 bytes | 351.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1)
+remote: Processing changes: new: 1, done
+remote:
+remote: New Changes:
+remote:   http://172.23.27.11:8080/#/c/test1/+/3 change for the second time
+remote:
+To ssh://172.23.27.11:29418/test1
+ * [new branch]      HEAD -> refs/for/master
+
+#+END_SRC
+* review
+
+* Gerrit页面修改错误，修改patch
+** 查看错误
+** argue
+** fix
+** 在线fix
+** 本地修改
+重新修改后，需要使用--amend参数进行提交，即使用前次提交的日志重新提交，这一点非常重要。因为这样就会对原提交说明中的“Change-Id:”标签予以原样保留，当再将新提交推送到服务器时，Gerrit不会为新提交生成新的评审任务编号而是会重用原有的任务编号，将新提交转化为老的评审任务的新的补丁集。
+在执行git commit --amend时，可以修改提交说明，但是注意不要删除Change-Id标签，更不能修改它。
+
+#+BEGIN_SRC java
+$ git add -u
+$ git commit --amend
+#+END_SRC
+
+* 重新提交
+根据评审者和检验者的提示，开发者对代码进行重新修改。
+重新修改后，需要使用--amend参数进行提交，即使用前次提交的日志重新提交，这一点非常重要。因为这样就会对原提交说明中的“Change-Id:”标签予以原样保留，当再将新提交推送到服务器时，Gerrit不会为新提交生成新的评审任务编号而是会重用原有的任务编号，将新提交转化为老的评审任务的新的补丁集。
+在执行git commit --amend时，可以修改提交说明，但是注意不要删除Change-Id标签，更不能修改它。
+
+#+BEGIN_SRC bash
+$ git commit --amend
+[master 29f85fb] alfjalkjfalfjl
+ Date: Thu May 3 16:12:26 2018 +0800
+ Committer: Hyman Lu(路海龙) <luhailong@inspur.com>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+#+END_SRC
