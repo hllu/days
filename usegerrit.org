@@ -24,6 +24,8 @@ C:\Users\luhailong\.ssh\id_rsa.pub
 
 * 下载工程
 在本地找一个放置代码的位置，在这个路径下载代码。下载的时候，必须用带hooks的命令，否则需要后面自己手动copy过来。
+[[./jpg/gitclone.png]]
+
 #+BEGIN_SRC java
 git clone ssh://luhailong@172.23.27.11:29418/hni && scp -p -P 29418 luhailong@172.23.27.11:hooks/commit-msg hni/.git/hooks/
 #+END_SRC
