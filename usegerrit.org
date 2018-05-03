@@ -178,7 +178,6 @@ abandon掉。
 
 ** 其他用户review patch
 
-[[./jpg/userreview.png]]
 
 用户可以点击右上角的reply按键来给出自己的意见，普通用户可以+1或者-1，如果是-1，最好给出理由。
 
@@ -199,7 +198,7 @@ abandon掉。
 ** 查看错误
 patch的修改者，可以在注释处给出自己的答复，也可以在线修改后提交。也可以本地修改后提交。
 
-[[./jpg/revewreply.png]]
+[[./jpg/reviewreply.png]]
 
 
 也可以在线修改
@@ -248,7 +247,9 @@ After doing this, you may fix the identity used for this commit with:
 [[./jpg/delblame.png]]
 
 
-** 管理着合入
+** 管理者合入
+
 有管理权限的人，可以submit合入
+
 [[./jpg/submit.png]]
 
