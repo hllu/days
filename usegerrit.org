@@ -116,9 +116,10 @@ After doing this, you may fix the identity used for this commit with:
 
 #+END_SRC
 
-* 提交代码
 提交代码时候，gerrit不允许直接push上去，需要push到refs/for/master，经过评审后才能合入代码。
+
 ** 直接push会提示没有权限
+以下是错误的方式
 #+BEGIN_SRC bash
 $ git push
 Counting objects: 3, done.
@@ -163,30 +164,62 @@ To ssh://172.23.27.11:29418/test1
 
 可以看到，向refs/for/master推送成功，之后就可以到gerrit页面查看自己提交的patch了。
 
+[[./jpg/addreview.png]]
+
+
 ** 自己提交的patch
 
 * review
+** 管理自己提交的patch
+[[./jpg/patchowner.png]]
+
+用户可以在最左上角那里选择需要评审的人员，可以点击右下角的修改文件，查看diff比较。如果发现这个patch有问题，还可以直接
+abandon掉。
+
+** 其他用户review patch
+
+[[./jpg/userreview.png]]
+
+用户可以点击右上角的reply按键来给出自己的意见，普通用户可以+1或者-1，如果是-1，最好给出理由。
+
+可以点开用户修改的文件，针对用户的修改，提出自己的问题。
+
+[[./jpg/userblame.png]]
+
+
+可以在-1的时候给出自己的意见：
+[[./jpg/userblame2.png]]
+
+
+管理员用户有更高的权限，可以+2或者-2.
+[[./jpg/review2.png]]
+
 
 * Gerrit页面修改错误，修改patch
 ** 查看错误
-** argue
-** fix
-** 在线fix
-** 本地修改
+patch的修改者，可以在注释处给出自己的答复，也可以在线修改后提交。也可以本地修改后提交。
+
+[[./jpg/revewreply.png]]
+
+
+也可以在线修改
+
+[[./jpg/fixinline.png]]
+
+
+在线修改完了，要publish
+
+[[./jpg/publish.png]]
+
+
+** 本地修改，重新提交
+根据评审者和检验者的提示，开发者对代码进行重新修改。
 重新修改后，需要使用--amend参数进行提交，即使用前次提交的日志重新提交，这一点非常重要。因为这样就会对原提交说明中的“Change-Id:”标签予以原样保留，当再将新提交推送到服务器时，Gerrit不会为新提交生成新的评审任务编号而是会重用原有的任务编号，将新提交转化为老的评审任务的新的补丁集。
 在执行git commit --amend时，可以修改提交说明，但是注意不要删除Change-Id标签，更不能修改它。
 
 #+BEGIN_SRC java
 $ git add -u
-$ git commit --amend
-#+END_SRC
 
-* 重新提交
-根据评审者和检验者的提示，开发者对代码进行重新修改。
-重新修改后，需要使用--amend参数进行提交，即使用前次提交的日志重新提交，这一点非常重要。因为这样就会对原提交说明中的“Change-Id:”标签予以原样保留，当再将新提交推送到服务器时，Gerrit不会为新提交生成新的评审任务编号而是会重用原有的任务编号，将新提交转化为老的评审任务的新的补丁集。
-在执行git commit --amend时，可以修改提交说明，但是注意不要删除Change-Id标签，更不能修改它。
-
-#+BEGIN_SRC bash
 $ git commit --amend
 [master 29f85fb] alfjalkjfalfjl
  Date: Thu May 3 16:12:26 2018 +0800
@@ -206,3 +239,16 @@ After doing this, you may fix the identity used for this commit with:
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 #+END_SRC
+
+
+如果发现修改没有必要，可以abandon掉这个patch。
+
+** 审阅者可以根据重新提交的修改和解释，继续-1，或者删除-1
+
+[[./jpg/delblame.png]]
+
+
+** 管理着合入
+有管理权限的人，可以submit合入
+[[./jpg/submit.png]]
+
