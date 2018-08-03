@@ -1,0 +1,150 @@
+# -*- org -*-
+#+AUTHOR:      the author (default taken from user-full-name)
+#+TITLE: 在Intellij IDEA中對java代碼做單元測試     
+#+EMAIL: luhailong@inspur.com
+#+KEYWORDS: odl, rpc
+#+OPTIONS: H:4 toc:t num:t
+
+* Java的单元测试模块
+** 什么是 JUnit？
+JUnit 是一个 Java 编程语言的单元测试框架。JUnit 在测试驱动的开发方面有很重要的发展，是起源于 JUnit 的一个统称为 xUnit 的单元测试框架之一。
+JUnit 促进了“先测试后编码”的理念，强调建立测试数据的一段代码，可以先测试，然后再应用。这个方法就好比“测试一点，编码一点，测试一点，编码一点……”，增加了程序员的产量和程序的稳定性，可以减少程序员的压力和花费在排错上的时间。
+** JUnit特点：
+- JUnit 是一个开放的资源框架，用于编写和运行测试。 
+- 提供注释来识别测试方法。 
+- 提供断言来测试预期结果。 
+- 提供测试运行来运行测试。 
+- JUnit 测试允许你编写代码更快，并能提高质量。 
+- JUnit 优雅简洁。没那么复杂，花费时间较少。
+- JUnit 测试可以自动运行并且检查自身结果并提供即时反馈。所以也没有必要人工梳理测试结果的报告。
+- JUnit 测试可以被组织为测试套件，包含测试用例，甚至其他的测试套件。
+- JUnit 在一个条中显示进度。如果运行良好则是绿色；如果运行失败，则变成红色。
+
+详细的介绍可以参照[[junit介绍][https://www.w3cschool.cn/junit/]]
+
+* 在Intellij EDEA中创建一个类的单元测试类
+首先在跟测试代码同级别的目录下创建一个test目录，并设置这个目录为test的根目录。
+
+[[./jpg/testroot.png]]
+
+
+创建的目录结构如下：
+
+[[./jpg/mulu.png]]
+
+
+
+IntelliJ IDEA提供了一个快捷操作Cmd + Shift + T作为类和测试之间的导航。同时允许用户在那里创建一个测试类。
+也可以通过菜单操作，鼠标放在要测试的类代码中，然后点击菜单navigate->test
+会跳出一个选择框，选择为哪些方法创建测试例，如图
+[[./jpg/createtest.png]]
+
+创建完成后，会自动创建一个对应类的测试类，如下：
+
+#+BEGIN_SRC java
+package org.opendaylight.inspur.napt;
+
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class SessionAddressTest {
+    @Test
+    public void getIpAddress() throws Exception {
+    }
+
+    @Test
+    public void getPortNumber() throws Exception {
+    }
+
+}
+#+END_SRC
+
+Intellij IDEA会自动在对应的目录下的pom文件中添加对JUnit和覆盖工具的依赖
+#+BEGIN_SRC json
+
+    <!-- Testing Dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    
+#+END_SRC
+
+在代码中，可以右键跳到对应的测试用例
+[[./jpg/jump2test.png]]
+
+可以在类的test文件中，写各种单元测试代码。
+
+* 单元测试的常用装饰器
+JUnit提供了很多装饰器，方便写测试代码，减少写测试代码的工作量，常用的装饰器有几种。
+** 方法装饰器
+#+BEGIN_SRC java
+public class SessionAddressTest {
+    SessionAddress sessionAddress;
+    @Before
+    public void initfunc(){
+        sessionAddress = new SessionAddress("1.2.3.4", 2244);
+    }
+    @BeforeClass
+    public void init(){
+        sessionAddress = new SessionAddress("1.2.3.4", 2244);
+    }
+    @AfterClass
+    public void closeclass(){
+        //close something in class
+    }
+
+    @After
+    public void close(){
+        //close something in func
+    }
+
+    @Test
+    public void getIpAddress() throws Exception {
+    }
+
+    @Ignore
+    public void getPortNumber() throws Exception {
+    }
+
+}
+#+END_SRC
+
+- @BeforeClass所修饰的方法在所有方法加载前执行，而且他是静态的在类加载后就会执行该方法，在内存中只有一份实例，适合用来加载配置文件。
+- @AfterClass所修饰的方法在所有方法执行完毕之后执行，通常用来进行资源清理，例如关闭数据库连接。
+- @Before和@After在每个测试方法执行前都会执行一次。
+- @Test(excepted=XX.class) 在运行时忽略某个异常。
+- @Test(timeout=毫秒) 允许程序运行的时间。
+- @Ignore 所修饰的方法被测试器忽略。
+- RunWith 可以修改测试运行器 org.junit.runner.Runner
+
+
+** 测试例中的断言
+- assertEquals(a, b)
+ ，如果一致则表示测试通过，否则表示测试不通过，抛出断言错误
+- assertNotEquals(a, b)
+ ，如果不一致则表示测试通过，否则表示测试不通过，抛出断言错误
+- assertNull(…)
+ ，如果为空，则测试通过，否则抛出断言错误
+- assertNotNull(…)
+ ，如果不为空，则测试通过，否则抛出断言错误
+- assertFalse(…)
+ ，如果为假，则表示测试通过，否则抛出断言错误
+- assertTrue(…)
+ ，如果为真，则表示测试通过，否则抛出断言错误
+
+* 单元测试执行
+单元测试的执行，可以在测试类上点右键选择执行，也可以在代码根路径上选择run all test，执行这个目录下的所有测试例，并查看覆
+盖率。
+
+
+* 覆盖率检查
+[[./jpg/testresult.png]]
