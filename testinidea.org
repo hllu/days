@@ -4,6 +4,7 @@
 #+EMAIL: luhailong@inspur.com
 #+KEYWORDS: odl, rpc
 #+OPTIONS: H:4 toc:t num:t
+\setCJKmainfont{SimSun}
 
 * Java的单元测试模块
 ** 什么是 JUnit？

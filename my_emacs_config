@@ -1,0 +1,290 @@
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+(set-foreground-color "grey")
+(set-background-color "black")
+(set-cursor-color "gold1")
+(set-mouse-color "gold1")
+
+;;启动设置
+(setq default-frame-alist
+             '((vertical-scroll-bars)
+               (top . 0)
+               (left . 0)
+               (width . 120)
+               (height . 43)
+               (background-color . "black")
+               (foreground-color . "grey")
+               (cursor-color . "gold1")
+               (mouse-color . "gold1")
+               (tool-bar-lines . 0)
+               (menu-bar-lines . 0)
+               (right-fringe)
+               (left-fringe)))
+
+;;启动自动最大化(数据自己调整，注意格式，如(top . 0)，圆点前后都要留有空格)
+;;(setq initial-frame-alist '((top . 0) (left . 0) (width . 142) (height . 46)))
+
+
+;; 设置另外一些颜色：语法高亮显示的背景和主题，区域选择的背景和主题，二次选择的背景和选择
+(set-face-foreground 'highlight "white")
+(set-face-background 'highlight "blue")
+(set-face-foreground 'region "cyan")
+(set-face-background 'region "blue")
+(set-face-foreground 'secondary-selection "skyblue")
+(set-face-background 'secondary-selection "darkblue")
+
+;;------------窗口界面设置结束-----------------
+
+;;------------显示时间设置------------------------------
+
+(display-time-mode 1);;启用时间显示设置，在minibuffer上面的那个杠上
+(setq display-time-24hr-format t);;时间使用24小时制
+(setq display-time-day-and-date t);;时间显示包括日期和具体时间
+(setq display-time-use-mail-icon t);;时间栏旁边启用邮件设置
+(setq display-time-interval 10);;时间的变化频率，单位多少来着？
+
+;;------------显示时间设置结束--------------
+
+;;------------定制操作习惯--------------------
+;;设置打开文件的缺省路径
+(setq default-directory "/home/lhl")
+
+
+(setq visible-bell t)
+;;关闭烦人的出错时的提示声
+
+(setq inhibit-startup-message t)
+;;关闭emacs启动时的画面
+
+;;(setq gnus-inhibit-startup-message t)
+;;关闭gnus启动时的画面
+
+(fset 'yes-or-no-p 'y-or-n-p)
+;; 改变 Emacs 固执的要你回答 yes 的行为。按 y 或空格键表示 yes，n 表示 no。
+
+(setq font-lock-maximum-decoration t)
+(setq font-lock-global-modes '(not shell-mode text-mode))
+(setq font-lock-verbose t)
+(setq font-lock-maximum-size '((t . 1048576) (vm-mode . 5250000)))
+;; 语法高亮。除 shell-mode 和 text-mode 之外的模式中使用语法高亮。
+
+(setq column-number-mode t)
+(setq line-number-mode t)
+;;显示行列号
+(global-linum-mode t)
+(setq mouse-yank-at-point t)
+;;不要在鼠标点击的那个地方插入剪贴板内容。我不喜欢那样，经常把我的文档搞的一团糟。我觉得先用光标定位，然后鼠标中键点击要好的多。不管你的光标在文档的那个位置，或是在 minibuffer，鼠标中键一点击，X selection 的内容就被插入到那个位置。
+
+(setq kill-ring-max 200)
+;;设置粘贴缓冲条目数量.用一个很大的kill ring(最多的记录个数). 这样防止我不小心删掉重要的东西
+
+(setq-default auto-fill-function 'do-auto-fill)
+;; Autofill in all modes;;
+(setq default-fill-column 120)
+;;把 fill-column 设为 60. 这样的文字更好读
+
+(setq-default indent-tabs-mode nil)
+(setq default-tab-width 8);;tab键为8个字符宽度
+(setq tab-stop-list ())
+;;不用 TAB 字符来indent, 这会引起很多奇怪的错误。编辑 Makefile 的时候也不用担心，因为 makefile-mode 会把 TAB 键设置成真正的 TAB 字符，并且加亮显示的。
+
+
+(setq enable-recursive-minibuffers t)
+;;可以递归的使用 minibuffer
+
+;;(setq org-src-fontify-natively t)
+;;代码高亮
+
+(setq scroll-margin 3 scroll-conservatively 10000)
+;;防止页面滚动时跳动， scroll-margin 3 可以在靠近屏幕边沿3行时就开始滚动，可以很好的看到上下文。
+
+(setq default-major-mode 'text-mode)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+;;设置缺省主模式是text，,并进入auto-fill次模式.而不是基本模式fundamental-mode
+
+(show-paren-mode t)
+;;打开括号匹配显示模式
+
+(setq show-paren-style 'parenthesis)
+;;括号匹配时可以高亮显示另外一边的括号，但光标不会烦人的跳到另一个括号处。
+
+(mouse-avoidance-mode 'animate)
+;;光标靠近鼠标指针时，让鼠标指针自动让开，别挡住视线。
+
+(setq frame-title-format "emacs@%b")
+;;在标题栏显示buffer的名字，而不是 emacs@wangyin.com 这样没用的提示。
+
+(setq uniquify-buffer-name-style 'forward);;好像没起作用
+;; 当有两个文件名相同的缓冲时，使用前缀的目录名做 buffer 名字，不用原来的foobar<?> 形式。
+
+(setq auto-image-file-mode t)
+;;让 Emacs 可以直接打开和显示图片。
+
+(setq global-font-lock-mode t)
+;;进行语法加亮。
+
+;; 把C-j绑定到到达指定行上 
+(global-set-key (kbd "C-h") 'backward-delete-char-untabify)
+(global-set-key (kbd "M-h") 'backward-kill-word)
+(global-set-key (kbd "<f1>") 'help-command)
+(global-set-key (kbd "<f7>") 'magit-status)
+
+(add-hook 'comint-output-filter-functions
+      'comint-watch-for-password-prompt)
+;;当你在shell、telnet、w3m等模式下时，必然碰到过要输入密码的情况,此时加密显出你的密码
+
+(setq make-backup-files nil)
+;; 设定不产生备份文件
+
+(setq-default make-backup-files nil)
+;; 不生成临时文件
+
+(put 'scroll-left 'disabled nil) ;允许屏幕左移
+(put 'scroll-right 'disabled nil) ;允许屏幕右移
+(put 'set-goal-column 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+(put 'LaTeX-hide-environment 'disabled nil)
+;;把这些缺省禁用的功能打开。
+
+;;允许emacs和外部其他程序的粘贴
+(setq x-select-enable-clipboard t)
+
+(setq user-full-name "luhailong")
+(setq user-mail-address "luhailong@inspur.com")
+;;设置有用的个人信息,这在很多地方有用。
+
+
+(setq track-eol t)
+;; 当光标在行尾上下移动的时候，始终保持在行尾。
+
+
+(setenv "PATH"
+        (concat
+         "/usr/local/texlive/2018/bin/x86_64-linux" ":"
+         (getenv  "PATH")
+         )
+)
+(let (
+        (mypaths
+         '(
+           "/usr/local/texlive/2018/bin/x86_64-linux"
+           ))
+        )
+    (setq exec-path (append exec-path mypaths) )
+)
+
+
+(setq org-latex-default-packages-alist
+      '(("" "xcolor" t)
+        ("" "graphicx" t)
+        ("" "xeCJK" t)
+        ("" "lmodern" t)
+        ("" "verbatim" t)
+        ("" "soul" t)        
+        ("" "longtable" nil)
+        ("" "float" nil)        
+        ("" "tikz" t)
+        (""     "wrapfig"   nil)
+        (""     "rotating"   nil)        
+        (""     "textcomp"  t)
+        ("" "url" t)
+        ("" "listings" t)
+        ("" "geometry" t)        
+        (""     "marvosym"  t)
+        (""  "textcomp" t)
+        ("" "natbib" t)
+        ("" "fancyhdr" t)
+;;        ("" "comment" t)                
+        ("" "geometry" t)
+;;        ("xetex" "hyperref" t)
+        (""     "wasysym"   t)
+        (""     "latexsym"  t)
+        (""     "amssymb"   t)
+;;        (""     "amsmath"   t)
+        (""     "indentfirst"  nil)        
+        (""     "hyperref"  nil)))
+
+
+(setq org-export-latex-listings  t)
+(require 'ox-latex)
+(setq org-latex-listings t)
+;;(add-to-list 'org-latex-packages-alist '("" "listings"))
+;;(add-to-list 'org-latex-packages-alist '("" "xcolor"))
+;; Options for \lset command（reference to listing Manual)
+(setq org-export-latex-listings-options
+      '(
+        ("basicstyle" "\\color{foreground}\\small\\mono")           ; 源代码字体样式
+        ("keywordstyle" "\\color{function}\\bfseries\\small\\mono") ; 关键词字体样式
+        ("identifierstyle" "\\color{doc}\\small\\mono")
+        ("commentstyle" "\\color{comment}\\small\\itshape")         ; 批注样式
+        ("stringstyle" "\\color{string}\\small")                    ; 字符串样式
+        ("showstringspaces" "false")                                ; 字符串空格显示
+        ("numbers" "left")                                          ; 行号显示
+        ("numberstyle" "\\color{preprocess}")                       ; 行号样式
+        ("stepnumber" "1")                                          ; 行号递增
+        ("backgroundcolor" "\\color{background}")                   ; 代码框背景色
+        ("tabsize" "4")                                             ; TAB等效空格数
+        ("captionpos" "t")                                          ; 标题位置 top or buttom(t|b)
+        ("breaklines" "true")                                       ; 自动断行
+        ("breakatwhitespace" "true")                                ; 只在空格分行
+        ("showspaces" "false")                                      ; 显示空格
+        ("columns" "flexible")                                      ; 列样式
+        ("frame" "single")                                          ; 代码框：阴影盒
+        ("frameround" "tttt")                                       ; 代码框： 圆角
+        ("framesep" "0pt")
+        ("framerule" "8pt")
+        ("rulecolor" "\\color{background}")
+        ("fillcolor" "\\color{white}")
+        ("rulesepcolor" "\\color{comdil}")
+        ("framexleftmargin" "10mm")
+        ))
+
+;; (setq org-latex-pdf-process '("xelatex -shell-escape -interaction nonstopmode %f"
+;;                                "xelatex -shell-escape -interaction nonstopmode %f"))
+
+
+
+
+;; (add-to-list 'org-latex-packages-alist '("" "minted"))
+;; (setq org-latex-listings 'minted)
+
+;; Add the shell-escape flag
+(setq org-latex-pdf-process '(
+                              "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                              ;; "bibtex %b"
+                              "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                              "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
+                              ))
+
+;; ;;Sample minted options.
+;; (setq org-latex-minted-options '(
+;;                                  ("frame" "lines")
+;;                                  ("fontsize" "\\scriptsize")
+;;                                  ("xleftmargin" "\\parindent")
+;;                                  ("linenos" "")
+;;                                  ))
+
+;; (setq org-latex-default-packages-alist
+;;       (remove '("AUTO" "inputenc" t) org-latex-default-packages-alist))
+
+;;-------------endlatex--------------------------------------------------
+(add-to-list'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (magit magit-gerrit magithub))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
