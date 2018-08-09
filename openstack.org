@@ -3,7 +3,7 @@
 #+TITLE:       OpenStack基础
 #+EMAIL: luhailong@inspur.com
 #+KEYWORDS: openstack, rpc
-#+OPTIONS: H:4 toc:t num:t
+#+OPTIONS: H:4 toc:t num:t ^:nil
 
 * WSGI(Web Server Gateway Interface)
 WSGI接口定义非常简单，它只要求Web开发者实现一个函数，就可以响应HTTP请求。我们来看一个最简单的Web版本的“Hello, web!”：
@@ -26,7 +26,7 @@ start_response('200 OK', [('Content-Type', 'text/html')])
 
 * past
 ** api-paste.ini
-#+BEGIN_SRC json
+#+BEGIN_SRC java
 [composite:neutron]
 use = egg:Paste#urlmap
 /: neutronversions_composite
@@ -149,7 +149,7 @@ pbr会读取和过滤setup.cfg中的数据，然后将解析后的数据提供�
 files段落定义了包中的文件位置，有三个基本的设置键：packages,namespace_packages,以及data_files.
 packages指定了必须安装的数个最高级别的包的列表。这个像setuptools中的函数find_packages.这里面它进入python的包体系中，在最
 高的级别路径下安装它。如果packages没有被指明，则默认为metadata段落中的name键值。
-#+BEGIN_SRC json
+#+BEGIN_SRC java
 [files]
 packages =
     neutron
@@ -176,7 +176,7 @@ scripts =
 *** 段落entry_points
 这个段落定义了命令行命令以及python的库lib的进入点。
 里面的内容分成子段落，子段落的头行设置了一组进入点的最高级目录的名称，里面定义了键值对，描述了会被安装的进入点。
-#+BEGIN_SRC json
+#+BEGIN_SRC java
 [entry_points]
 wsgi_scripts =
     neutron-api = neutron.server:get_application
@@ -242,7 +242,7 @@ oslo.test：提供单元测试的基础框架。
 ** @abc.abstractmethod
 ** @six
 ** @
-
+   
 ** @profiler.trace_cls("l3-agent")
 一些API请求的处理会经过多个不同的服务（例如，虚拟机的创建过程）。如果有些请求处理过程太慢，分析其中的处理细节会非常的困难和复杂。osprofiler项目由此产生。
 osprofiler项目精简但是功能强大，即将被所有的OpenStack服务项目及其客户端项目所采用。使用osprofiler会对每个请求生成一条痕
@@ -273,13 +273,13 @@ class TracedClass(object):
 [[./jpg/fip.jpg]]
 
 *** router外网接口IP
-#+BEGIN_SRC 
+#+BEGIN_SRC java
 neutron router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID
 #+END_SRC
 
 
 *** iptables处理
-#+BEGIN_SRC json
+#+BEGIN_SRC java
 
 -A PREROUTING -j neutron-l3-agent-PREROUTING
 
@@ -297,7 +297,7 @@ neutron router-gateway-set $ROUTER_ID $EXTERNAL_NETWORK_ID
 
 #+END_SRC
 
-#+BEGIN_SRC json
+#+BEGIN_SRC java
 -A neutron-l3-agent-OUTPUT -d 192.168.12.11/32 -j DNAT --to-destination 70.0.0.3
 
 -A neutron-l3-agent-PREROUTING -d 192.168.12.11/32 -j DNAT --to-destination 70.0.0.3
@@ -366,7 +366,7 @@ https://docs.openstack.org/infra/manual/creators.html
 
 
 * listalltheipof a subnet
-#+BEGIN_SRC bash
+#+BEGIN_SRC java
 [root@compute ~(keystone_admin)]# neutron port-list --fixed-ips subnet_id=bc7baee2-67bc-480b-a18d-62e397af6963 
 neutron CLI is deprecated and will be removed in the future. Use openstack CLI instead.
 +--------------------------------------+------+----------------------------------+-------------------+----------------------------------------------------------------------------------+
@@ -391,7 +391,7 @@ DEBUG: keystoneauth.identity.v3.base {"token": {"is_domain": false, "methods": [
 #+END_SRC
 
 
-#+BEGIN_SRC bash
+#+BEGIN_SRC java
 [root@compute ~(keystone_admin)]# neutron --debug port-list
 neutron CLI is deprecated and will be removed in the future. Use openstack CLI instead.
 DEBUG: stevedore.extension found extension EntryPoint.parse('v2token = keystoneauth1.loading._plugins.identity.v2:Token')
@@ -443,7 +443,7 @@ DEBUG: keystoneauth.identity.v3.base {"token": {"is_domain": false, "methods": [
 +--------------------------------------+------+----------------------------------+-------------------+----------------------------------------------------------------------------------+
 #+END_SRC
 
-#+BEGIN_SRC bash
+#+BEGIN_SRC java
 [root@compute ~(keystone_admin)]# neutron --debug port-list --fixed-ips subnet_id=bc7baee2-67bc-480b-a18d-62e397af6963 
 neutron CLI is deprecated and will be removed in the future. Use openstack CLI instead.
 DEBUG: stevedore.extension found extension EntryPoint.parse('v2token = keystoneauth1.loading._plugins.identity.v2:Token')
